@@ -244,7 +244,11 @@ const Options = props => {
     onChange: value => setFormData({ ...formData,
       'cf7_remove_autop': value ? value : ''
     })
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("hr", null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Button, {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("hr", {
+    style: {
+      margin: '20px 0'
+    }
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Button, {
     className: "button",
     isPrimary: true,
     isLarge: true,
@@ -258,7 +262,7 @@ const Options = props => {
       saveEntityRecord('wecodeart', 'settings', value).then(handleNotice);
     },
     disabled: loading
-  }, loading ? '' : __('Save', 'wecodeart'))));
+  }, loading ? '' : __('Save', 'wecodeart')));
 };
 })();
 

@@ -124,24 +124,22 @@ const Options = (props) => {
                 checked={formData['cf7_remove_autop']}
                 onChange={value => setFormData({ ...formData, 'cf7_remove_autop': value ? value : '' })}
             />
-            <hr />
-            <p>
-                <Button
-                    className="button"
-                    isPrimary
-                    isLarge
-                    icon={loading && <Spinner />}
-                    onClick={() => {
-                        setLoading(true);
-                        let value = {};
-                        Object.keys(formData).map(k => value = { ...value, [k]: formData[k] === '' ? 'unset' : formData[k] });
-                        saveEntityRecord('wecodeart', 'settings', value).then(handleNotice);
-                    }}
-                    {...{ disabled: loading }}
-                >
-                    {loading ? '' : __('Save', 'wecodeart')}
-                </Button>
-            </p>
+            <hr style={{ margin: '20px 0' }} />
+            <Button
+                className="button"
+                isPrimary
+                isLarge
+                icon={loading && <Spinner />}
+                onClick={() => {
+                    setLoading(true);
+                    let value = {};
+                    Object.keys(formData).map(k => value = { ...value, [k]: formData[k] === '' ? 'unset' : formData[k] });
+                    saveEntityRecord('wecodeart', 'settings', value).then(handleNotice);
+                }}
+                {...{ disabled: loading }}
+            >
+                {loading ? '' : __('Save', 'wecodeart')}
+            </Button>
         </>
     );
 };
