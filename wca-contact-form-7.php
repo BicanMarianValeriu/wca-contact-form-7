@@ -15,7 +15,7 @@
  * Plugin Name:       WCA: Contact Form 7
  * Plugin URI:        https://www.wecodeart.com/
  * Description:       WCA Contact Form 7 extension for WeCodeArt Framework theme - assets optimization and automatic forms styling.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            Bican Marian Valeriu
  * Author URI:        https://www.wecodeart.com/about/
  * License:           GPL-2.0+
@@ -34,7 +34,7 @@ defined( 'WPINC' ) || die;
  * Rename this for your plugin and update it as you release new versions.
  */
 define( 'WCA_CF7_EXT', __FILE__ );
-define( 'WCA_CF7_EXT_VER', '1.0.1' );
+define( 'WCA_CF7_EXT_VER', '1.0.2' );
 define( 'WCA_CF7_EXT_DIR', plugin_dir_path( WCA_CF7_EXT ) );
 define( 'WCA_CF7_EXT_URL', plugin_dir_url( WCA_CF7_EXT ) );
 

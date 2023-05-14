@@ -5,8 +5,8 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: Contact Form 7, WeCodeArt Framework
 Requires at least: 6.0
 Tested up to: 6.2
-Stable tag: 1.0.1
-Version: 1.0.1
+Stable tag: 1.0.2
+Version: 1.0.2
 Requires PHP: 7.0
 
 A simple WordPress plugin designed to extend the functionality of your theme and provide seamless integration between the theme and the Contact Form 7 plugin. It enhances the capabilities of your theme by providing additional features and options for contact forms created using Contact Form 7.
