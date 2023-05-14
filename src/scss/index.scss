@@ -1,0 +1,86 @@
+.wpcf7 {
+	.submitting {
+		.wpcf7-spinner {
+			visibility: visible;
+		}
+	}
+
+	.screen-reader-response,
+	.wpcf7-response-output:empty {
+		display: none;
+	}
+
+	.wpcf7-not-valid-tip {
+		display: block;
+		width: 100%;
+		font-size: var(--wp--preset--font-size--small);
+		color: var(--wp--preset--color--danger);
+	}
+		
+	.wpcf7-submit {
+		&:disabled {
+			opacity: .5;
+		}
+	}
+	
+	.wpcf7-spinner {
+		position: relative;
+		visibility: hidden;
+		display: inline-block;
+		vertical-align: -.25em;
+		background-color: var(--wp--preset--color--dark);
+		opacity: 0.75;
+		width: 1.5em;
+		height: 1.5em;
+		padding: 0;
+		border: none;
+		border-radius: 100%;
+		margin: 0 1.5em;
+	
+		&::before { 
+			content: '';
+			position: absolute;
+			background-color: var(--wp--preset--color--light);
+			top: 4px;
+			left: 4px;
+			width: 6px;
+			height: 6px;
+			border: none;
+			border-radius: 100%;
+			transform-origin: 8px 8px;
+			animation-name: spin;
+			animation-duration: 1000ms;
+			animation-timing-function: linear;
+			animation-iteration-count: infinite;
+
+			@media (prefers-reduced-motion: reduce) {
+				animation-name: blink;
+				animation-duration: 2000ms;
+			}
+		}
+	}
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes blink {
+	from {
+		opacity: 0;
+	}
+
+	50% {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+	}
+}

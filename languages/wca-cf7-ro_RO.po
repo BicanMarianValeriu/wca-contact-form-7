@@ -1,0 +1,64 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WCA: Contact Form 7\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-02-02 23:19+0000\n"
+"PO-Revision-Date: 2022-02-02 23:24+0000\n"
+"Last-Translator: \n"
+"Language-Team: Romanian\n"
+"Language: ro_RO\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 :(((n%100>19)||(( n%100==0)&&(n!"
+"=0)))? 2 : 1));\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.5.8; wp-5.9\n"
+"X-Domain: wca-cf7"
+
+#: admin/class-admin.php:91
+msgid "Awesome, show me the options!"
+msgstr "Minunat, arată-mi opțiunile!"
+
+#: admin/class-admin.php:88
+msgid "Awesome, WCA: Contact Form 7 extension is activated!"
+msgstr "Minunat, WCA: Extensia Formular de Contact 7 este activată!"
+
+#. Author of the plugin
+msgid "Bican Marian Valeriu"
+msgstr "Bican Marian Valeriu"
+
+#: admin/class-admin.php:89
+msgid "Go to theme extension options in order to setup your preferences."
+msgstr "Accesați opțiunile extensiei temei pentru a vă configura preferințele."
+
+#. URI of the plugin
+msgid "https://www.wecodeart.com/"
+msgstr "https://www.wecodeart.com/"
+
+#. Author URI of the plugin
+msgid "https://www.wecodeart.com/about/"
+msgstr "https://www.wecodeart.com/about/"
+
+#: includes/class-activator.php:66
+msgid "This extension requires Contact Form 7 plugin installed and active."
+msgstr "Această extensie necesită pluginul Contact Form 7 instalat și activ."
+
+#: includes/class-activator.php:65
+msgid ""
+"This extension requires WeCodeArt Framework (or a skin) installed and active."
+msgstr ""
+"Această extensie necesită tema WeCodeArt Framework (sau un skin) instalat și "
+"activ."
+
+#. Description of the plugin
+msgid ""
+"WCA Contact Form 7 extension for WeCodeArt Framework theme - assets "
+"optimization and automatic forms styling."
+msgstr ""
+"Extensie WCA Formular de Contact 7 pentru tema WeCodeArt Framework - "
+"optimizarea activelor și stilarea automată a formularelor."
+
+#. Name of the plugin
+msgid "WCA: Contact Form 7"
+msgstr "WCA: Formular de Contact 7"
