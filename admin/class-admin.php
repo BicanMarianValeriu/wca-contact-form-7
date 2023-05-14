@@ -87,7 +87,7 @@ class Admin {
 				</div>',
 				esc_html__( 'Awesome, WCA: Contact Form 7 extension is activated!', 'wca-cf7' ),
 				esc_html__( 'Go to theme extension options in order to setup your preferences.', 'wca-cf7' ),
-				esc_url( admin_url( '/themes.php?page=wecodeart#wca-extensions' ) ),
+				esc_url( admin_url( '/themes.php?page=wecodeart&tab=extensions' ) ),
 				esc_html__( 'Awesome, show me the options!', 'wca-cf7' )
 			),
 			[
