@@ -147,7 +147,7 @@ class CF7 implements Integration {
 	private function set_locale() {
 		$plugin_i18n = CF7\I18N::get_instance();
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+		$this->loader->add_action( 'init', $plugin_i18n, 'load_plugin_textdomain' );
 	}
 
 	/**

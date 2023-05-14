@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WCA: Contact Form 7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-02 23:23+0000\n"
+"POT-Creation-Date: 2023-05-14 07:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -29,7 +29,7 @@ msgid "Bican Marian Valeriu"
 msgstr ""
 
 #: admin/class-admin.php:89
-msgid "Go to theme extension options in order to setup your preferences."
+msgid "Go to Theme Options in order to setup your preferences."
 msgstr ""
 
 #. URI of the plugin
@@ -40,11 +40,11 @@ msgstr ""
 msgid "https://www.wecodeart.com/about/"
 msgstr ""
 
-#: includes/class-activator.php:66
+#: includes/class-activator.php:69
 msgid "This extension requires Contact Form 7 plugin installed and active."
 msgstr ""
 
-#: includes/class-activator.php:65
+#: includes/class-activator.php:68
 msgid ""
 "This extension requires WeCodeArt Framework (or a skin) installed and active."
 msgstr ""
