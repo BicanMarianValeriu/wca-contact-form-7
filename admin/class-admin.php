@@ -149,19 +149,61 @@ class Admin {
 	 * @since	1.0.0
 	 * @version	1.0.0
 	 */
-	public function update( $update_file, $new_version, $plugin_data ) {
-		var_dump( WCA_CF7_EXT );
-		if ( get_prop( $plugin_data, [ 'slug' ] ) === WCA_CF7_EXT ) {
-			$url 		= "https://api.github.com/repos/BicanMarianValeriu/wca-contact-form-7/releases/tags/v$new_version";
-			$request	= new Request( $url, [] );
-			$request->send( $request::METHOD_GET );
-			$results = $request->get_response_body( true );
-
-			if( $file = get_prop( $results, [ 'assets', 0, 'browser_download_url' ] ) ) {
-				$update_file = $file;
-			}
+	public function update( $transient ) {
+		if ( ! is_object( $transient ) ) {
+			return $transient;
 		}
 
-		return $update_file;
+		if ( ! isset( $transient->response ) || ! is_array( $transient->response ) ){
+			$transient->response = [];
+		}
+
+		$cache_key  = 'wecodeart/transient/extension/cf7/update';
+		$filename 	= 'wca-contact-form-7/wca-contact-form-7.php';
+		$api_url	= 'https://api.github.com/repos/BicanMarianValeriu/wca-contact-form-7/releases/latest';
+		
+		if ( false === ( $response = get_transient($cache_key ) ) ) {
+			$request	= new Request( $api_url, [] );
+			$request->send( $request::METHOD_GET );
+			$response = $request->get_response_body( true );
+			set_transient( $cache_key, $response, 12 * HOUR_IN_SECONDS );
+		}
+
+		if( $response ) {
+			$tag_name 	= get_prop( $response, 'tag_name', '' );
+			$version 	= str_replace( 'v', '', $tag_name );
+
+			if( \version_compare( WCA_CF7_EXT_VER, $version, '<' ) ) {
+				$transient->response[$filename] = (object) [
+					'slug'         	=> 'wca-google-tools-extension',
+					'plugin'		=> $filename,
+					'new_version'	=> $version,
+					'url'          	=> 'https://github.com/BicanMarianValeriu/wca-contact-form-7/archive/refs/tags/' . $tag_name,
+					'package'      	=> sprintf( 'https://github.com/BicanMarianValeriu/wca-contact-form-7/archive/refs/tags/%s.zip', $tag_name ),
+					'upgrade_notice'=> 'Test',
+				];
+			} else {
+				unset( $transient->response[ $filename ] );
+			}
+
+		}
+
+		return $transient;
+	}
+
+	/**
+	 * Meta
+	 *
+	 * @since	1.0.0
+	 * @version	1.0.0
+	 */
+	public function meta( $plugin_meta, $plugin_file, $plugin_data, $status ) {
+		$filename 	= 'wca-contact-form-7/wca-contact-form-7.php';
+		
+		if( $plugin_file === $filename ) {
+			// Do stuff
+		}
+	
+		return $plugin_meta;
 	}
 }
