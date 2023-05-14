@@ -170,7 +170,7 @@ class Admin {
 		}
 
 		if( $response ) {
-			$tag_name 	= get_prop( $response, 'tag_name', '' );
+			$tag_name 	= get_prop( $response, 'tag_name', 'v1.0.1' );
 			$version 	= str_replace( 'v', '', $tag_name );
 
 			if( \version_compare( WCA_CF7_EXT_VER, $version, '<' ) ) {
