@@ -12,6 +12,7 @@
 namespace WCA\EXT\CF7;
 
 use WeCodeArt\Config\Traits\Asset;
+use WeCodeArt\Admin\Request;
 use WeCodeArt\Admin\Notifications;
 use WeCodeArt\Admin\Notifications\Notification;
 use function WeCodeArt\Functions\get_prop;
@@ -140,5 +141,27 @@ class Admin {
 		);
 
 		wp_enqueue_script( $this->make_handle() );
+	}
+
+	/**
+	 * Update
+	 *
+	 * @since	1.0.0
+	 * @version	1.0.0
+	 */
+	public function update( $update_file, $new_version, $plugin_data ) {
+		var_dump( WCA_CF7_EXT );
+		if ( get_prop( $plugin_data, [ 'slug' ] ) === WCA_CF7_EXT ) {
+			$url 		= "https://api.github.com/repos/BicanMarianValeriu/wca-contact-form-7/releases/tags/v$new_version";
+			$request	= new Request( $url, [] );
+			$request->send( $request::METHOD_GET );
+			$results = $request->get_response_body( true );
+
+			if( $file = get_prop( $results, [ 'assets', 0, 'browser_download_url' ] ) ) {
+				$update_file = $file;
+			}
+		}
+
+		return $update_file;
 	}
 }
