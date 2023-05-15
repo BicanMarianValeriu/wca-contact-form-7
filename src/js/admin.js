@@ -132,8 +132,13 @@ const Options = (props) => {
                 icon={loading && <Spinner />}
                 onClick={() => {
                     setLoading(true);
-                    let value = {};
-                    Object.keys(formData).map(k => value = { ...value, [k]: formData[k] === '' ? 'unset' : formData[k] });
+
+                    const value = Object.keys(formData).reduce((result, key) => {
+                        result[key] = formData[key] === '' ? 'unset' : formData[key];
+
+                        return result;
+                    }, {});
+
                     saveEntityRecord('wecodeart', 'settings', value).then(handleNotice);
                 }}
                 {...{ disabled: loading }}

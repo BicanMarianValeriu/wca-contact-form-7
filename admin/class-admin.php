@@ -88,7 +88,7 @@ class Admin {
 				</div>',
 				esc_html__( 'Awesome, WCA: Contact Form 7 extension is activated!', 'wca-cf7' ),
 				esc_html__( 'Go to Theme Options in order to setup your preferences.', 'wca-cf7' ),
-				esc_url( admin_url( '/themes.php?page=wecodeart&tab=extensions' ) ),
+				esc_url( admin_url( '/themes.php?page=wecodeart&tab=extensions#wca-cf7' ) ),
 				esc_html__( 'Awesome, show me the options!', 'wca-cf7' )
 			),
 			[
@@ -159,7 +159,6 @@ class Admin {
 		}
 
 		$cache_key  = 'wecodeart/transient/extension/cf7/update';
-		$filename 	= 'wca-contact-form-7/wca-contact-form-7.php';
 		$api_url	= 'https://api.github.com/repos/BicanMarianValeriu/wca-contact-form-7/releases/latest';
 		
 		if ( false === ( $response = get_transient($cache_key ) ) ) {
@@ -174,18 +173,17 @@ class Admin {
 			$version 	= str_replace( 'v', '', $tag_name );
 
 			if( \version_compare( WCA_CF7_EXT_VER, $version, '<' ) ) {
-				$transient->response[$filename] = (object) [
+				$transient->response[WCA_CF7_EXT_BASE] = (object) [
 					'slug'         	=> 'wca-google-tools-extension',
-					'plugin'		=> $filename,
+					'plugin'		=> WCA_CF7_EXT_BASE,
 					'new_version'	=> $version,
-					'url'          	=> 'https://github.com/BicanMarianValeriu/wca-contact-form-7/archive/refs/tags/' . $tag_name,
+					'url'          	=> 'https://github.com/BicanMarianValeriu/wca-contact-form-7/releases/tag/' . $tag_name,
 					'package'      	=> sprintf( 'https://github.com/BicanMarianValeriu/wca-contact-form-7/archive/refs/tags/%s.zip', $tag_name ),
-					'upgrade_notice'=> 'Test',
+					'upgrade_notice'=> '',
 				];
 			} else {
-				unset( $transient->response[ $filename ] );
+				unset( $transient->response[ WCA_CF7_EXT_BASE ] );
 			}
-
 		}
 
 		return $transient;
@@ -197,13 +195,39 @@ class Admin {
 	 * @since	1.0.0
 	 * @version	1.0.0
 	 */
-	public function meta( $plugin_meta, $plugin_file, $plugin_data, $status ) {
-		$filename 	= 'wca-contact-form-7/wca-contact-form-7.php';
-		
-		if( $plugin_file === $filename ) {
-			// Do stuff
+	public function meta( $plugin_meta, $plugin_file ) {		
+		// If we are not on the correct plugin, abort.
+		if( WCA_CF7_EXT_BASE !== $plugin_file) {
+			return $plugin_meta;
 		}
-	
-		return $plugin_meta;
+
+		$review_link  = '<a href="https://wordpress.org/support/plugin/wca-contact-form-7/reviews/?filter=5" aria-label="' . esc_attr__( 'Review plugin on WordPress.org', 'wca-cf7' ) . '" target="_blank">';
+		$review_link .= esc_html__( 'Leave a Review', 'wca-cf7' );
+		$review_link .= '</a>';
+
+		return array_merge( $plugin_meta, [
+			'review' => $review_link,
+		] );
+	}
+
+	/**
+	 * Links
+	 *
+	 * @since	1.0.0
+	 * @version	1.0.0
+	 */
+	public function links( $plugin_links, $plugin_file ) {
+		// If we are not on the correct plugin, abort.
+		if ( WCA_CF7_EXT_BASE !== $plugin_file ) {
+			return $plugin_links;
+		}
+
+		$settings_link  = '<a href="' . esc_url( admin_url( '/themes.php?page=wecodeart&tab=extensions#wca-cf7' ) ) . '" aria-label="' . esc_attr__( 'Navigate to the extension settings.', 'wca-cf7' ) . '">';
+		$settings_link .= esc_html__( 'Settings', 'wca-cf7' );
+		$settings_link .= '</a>';
+
+		array_unshift( $plugin_links, $settings_link );
+
+		return $plugin_links;
 	}
 }

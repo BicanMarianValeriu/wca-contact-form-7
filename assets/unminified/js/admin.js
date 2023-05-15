@@ -255,10 +255,10 @@ const Options = props => {
     icon: loading && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Spinner, null),
     onClick: () => {
       setLoading(true);
-      let value = {};
-      Object.keys(formData).map(k => value = { ...value,
-        [k]: formData[k] === '' ? 'unset' : formData[k]
-      });
+      const value = Object.keys(formData).reduce((result, key) => {
+        result[key] = formData[key] === '' ? 'unset' : formData[key];
+        return result;
+      }, {});
       saveEntityRecord('wecodeart', 'settings', value).then(handleNotice);
     },
     disabled: loading
