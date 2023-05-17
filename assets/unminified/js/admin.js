@@ -107,6 +107,7 @@ const {
   },
   components: {
     Placeholder,
+    DropdownMenu,
     ToggleControl,
     SelectControl,
     Dashicon,
@@ -130,14 +131,17 @@ function optionsPanel(panels) {
 }
 
 const Options = props => {
+  var _settings;
+
   const {
-    isRequesting,
+    settings,
     wecodeartSettings,
-    saveEntityRecord,
+    saveSettings,
+    isRequesting,
     createNotice
   } = props;
 
-  if (isRequesting || !wecodeartSettings) {
+  if (isRequesting || ((_settings = !settings) !== null && _settings !== void 0 ? _settings : wecodeartSettings)) {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Placeholder, {
       icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Spinner, null),
       label: __('Loading', 'wca-cf7'),
@@ -149,18 +153,10 @@ const Options = props => {
 
   const apiOptions = (_ref => {
     let {
-      cf7_clean_assets,
-      cf7_remove_js,
-      cf7_remove_css,
-      cf7_remove_autop
+      contact_form_7
     } = _ref;
-    return {
-      cf7_clean_assets,
-      cf7_remove_js,
-      cf7_remove_css,
-      cf7_remove_autop
-    };
-  })(wecodeartSettings);
+    return contact_form_7;
+  })(settings !== null && settings !== void 0 ? settings : wecodeartSettings);
 
   const [formData, setFormData] = useState(apiOptions);
 
@@ -175,22 +171,22 @@ const Options = props => {
 
     switch (type) {
       case 'assets':
-        status = formData['cf7_clean_assets'] ? __('when the content has a form', 'wca-cf7') : __('on every page', 'wca-cf7');
+        status = formData['clean_assets'] ? __('when the content has a form', 'wca-cf7') : __('on every page', 'wca-cf7');
         text = sprintf(__('Contact Form 7 assets are loaded %s.', 'wca-cf7'), status);
         break;
 
       case 'JS':
-        status = formData['cf7_remove_js'] ? __('removed', 'wca-cf7') : __('loaded', 'wca-cf7');
+        status = formData['remove_js'] ? __('removed', 'wca-cf7') : __('loaded', 'wca-cf7');
         text = sprintf(__('Default Contact Form 7 plugin JS will be %s.', 'wca-cf7'), status);
         break;
 
       case 'CSS':
-        status = formData['cf7_remove_css'] ? __('removed', 'wca-cf7') : __('loaded', 'wca-cf7');
+        status = formData['remove_css'] ? __('removed', 'wca-cf7') : __('loaded', 'wca-cf7');
         text = sprintf(__('Default Contact Form 7 plugin CSS will be %s.', 'wca-cf7'), status);
         break;
 
       case 'P':
-        status = formData['cf7_remove_autop'] ? __('does not', 'wca-cf7') : __('does', 'wca-cf7');
+        status = formData['remove_autop'] ? __('does not', 'wca-cf7') : __('does', 'wca-cf7');
         text = sprintf(__('Contact Form 7 %s apply the "autop" filter to the form content.', 'wca-cf7'), status);
         break;
 
@@ -200,49 +196,72 @@ const Options = props => {
     return text;
   };
 
-  const assetsControl = (formData['cf7_remove_js'] === true && formData['cf7_remove_css'] === true) === false;
+  const assetsControl = !(formData['remove_js'] && formData['remove_css']);
   useEffect(() => {
     if (!assetsControl) {
       setFormData({ ...formData,
-        'cf7_clean_assets': ''
+        clean_assets: false
       });
     }
   }, [assetsControl]);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ToggleControl, {
-    label: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, __('Remove JS?', 'wca-cf7'), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Tooltip, {
-      text: __('Removing JS will cause the form submission to hard refresh the page!', 'wca-cf7')
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Dashicon, {
-      icon: "editor-help",
+    label: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
       style: {
-        marginLeft: '1rem',
-        color: 'var(--wp-admin-theme-color)'
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between'
       }
-    }))),
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, __('Remove JS?', 'wca-cf7')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(DropdownMenu, {
+      label: __('More Information', 'wca-cf7'),
+      icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Dashicon, {
+        icon: "info",
+        style: {
+          color: 'var(--wca--header--color)'
+        }
+      }),
+      toggleProps: {
+        style: {
+          height: 'initial',
+          minWidth: 'initial',
+          padding: 0
+        }
+      },
+      popoverProps: {
+        focusOnMount: 'container',
+        position: 'bottom',
+        noArrow: false
+      }
+    }, () => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+      style: {
+        minWidth: 150,
+        margin: 0
+      }
+    }, __('Removing JS will cause the form submission to hard refresh the page!', 'wca-cf7'))))),
     help: getHelpText('JS'),
-    checked: formData['cf7_remove_js'],
+    checked: formData['remove_js'],
     onChange: value => setFormData({ ...formData,
-      'cf7_remove_js': value ? value : ''
+      remove_js: value
     })
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ToggleControl, {
     label: __('Remove CSS?', 'wca-cf7'),
     help: getHelpText('CSS'),
-    checked: formData['cf7_remove_css'],
+    checked: formData['remove_css'],
     onChange: value => setFormData({ ...formData,
-      'cf7_remove_css': value ? value : ''
+      remove_css: value
     })
   }), assetsControl && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ToggleControl, {
     label: __('Optimize assets loading?', 'wca-cf7'),
     help: getHelpText('assets'),
-    checked: formData['cf7_clean_assets'],
+    checked: formData['clean_assets'],
     onChange: value => setFormData({ ...formData,
-      'cf7_clean_assets': value ? value : ''
+      clean_assets: value
     })
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ToggleControl, {
     label: __('Remove "autop" filter?', 'wca-cf7'),
     help: getHelpText('P'),
-    checked: formData['cf7_remove_autop'],
+    checked: formData['remove_autop'],
     onChange: value => setFormData({ ...formData,
-      'cf7_remove_autop': value ? value : ''
+      remove_autop: value
     })
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("hr", {
     style: {
@@ -255,11 +274,9 @@ const Options = props => {
     icon: loading && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Spinner, null),
     onClick: () => {
       setLoading(true);
-      const value = Object.keys(formData).reduce((result, key) => {
-        result[key] = formData[key] === '' ? 'unset' : formData[key];
-        return result;
-      }, {});
-      saveEntityRecord('wecodeart', 'settings', value).then(handleNotice);
+      saveSettings({
+        contact_form_7: formData
+      }, handleNotice);
     },
     disabled: loading
   }, loading ? '' : __('Save', 'wecodeart')));

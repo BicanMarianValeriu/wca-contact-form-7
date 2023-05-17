@@ -123,7 +123,7 @@ class Admin {
 		$path = wecodeart_if( 'is_dev_mode' ) ? 'unminified' : 'minified';
 		$name = wecodeart_if( 'is_dev_mode' ) ? 'admin' : 'admin.min';
 		$data = [
-			'version' 		=> wecodeart( 'version' ),
+			'version' 		=> $this->version,
 			'dependencies'	=> [
 				'wp-i18n',
 				'wp-hooks',
@@ -134,7 +134,7 @@ class Admin {
 
 		wp_register_script( 
 			$this->make_handle(),
-			wp_normalize_path( sprintf( '%s/assets/%s/js/%s.js', plugin_dir_url( __DIR__ ), $path, $name ) ),
+			wp_normalize_path( sprintf( '%s/assets/%s/js/%s.js', WCA_CF7_EXT_URL, $path, $name ) ),
 			$data['dependencies'], 
 			$data['version'], 
 			true 
@@ -174,10 +174,10 @@ class Admin {
 
 			if( \version_compare( WCA_CF7_EXT_VER, $version, '<' ) ) {
 				$transient->response[WCA_CF7_EXT_BASE] = (object) [
-					'slug'         	=> 'wca-google-tools-extension',
+					'slug'     		=> 'wca-contact-form-7',
 					'plugin'		=> WCA_CF7_EXT_BASE,
 					'new_version'	=> $version,
-					'url'          	=> 'https://github.com/BicanMarianValeriu/wca-contact-form-7/releases/tag/' . $tag_name,
+					'url'          	=> 'https://github.com/BicanMarianValeriu/wca-contact-form-7/commits/' . $tag_name,
 					'package'      	=> sprintf( 'https://github.com/BicanMarianValeriu/wca-contact-form-7/archive/refs/tags/%s.zip', $tag_name ),
 					'upgrade_notice'=> '',
 				];

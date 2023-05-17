@@ -15,6 +15,7 @@ const {
     },
     components: {
         Placeholder,
+        DropdownMenu,
         ToggleControl,
         SelectControl,
         Dashicon,
@@ -38,9 +39,9 @@ function optionsPanel(panels) {
 }
 
 const Options = (props) => {
-    const { isRequesting, wecodeartSettings, saveEntityRecord, createNotice } = props;
+    const { settings, wecodeartSettings, saveSettings, isRequesting, createNotice } = props;
 
-    if (isRequesting || !wecodeartSettings) {
+    if (isRequesting || (!settings ?? wecodeartSettings)) {
         return <Placeholder {...{
             icon: <Spinner />,
             label: __('Loading', 'wca-cf7'),
@@ -49,7 +50,7 @@ const Options = (props) => {
     }
 
     const [loading, setLoading] = useState(null);
-    const apiOptions = (({ cf7_clean_assets, cf7_remove_js, cf7_remove_css, cf7_remove_autop }) => ({ cf7_clean_assets, cf7_remove_js, cf7_remove_css, cf7_remove_autop }))(wecodeartSettings);
+    const apiOptions = (({ contact_form_7 }) => (contact_form_7))(settings ?? wecodeartSettings);
     const [formData, setFormData] = useState(apiOptions);
 
     const handleNotice = () => {
@@ -62,19 +63,19 @@ const Options = (props) => {
 
         switch (type) {
             case 'assets':
-                status = formData['cf7_clean_assets'] ? __('when the content has a form', 'wca-cf7') : __('on every page', 'wca-cf7');
+                status = formData['clean_assets'] ? __('when the content has a form', 'wca-cf7') : __('on every page', 'wca-cf7');
                 text = sprintf(__('Contact Form 7 assets are loaded %s.', 'wca-cf7'), status);
                 break;
             case 'JS':
-                status = formData['cf7_remove_js'] ? __('removed', 'wca-cf7') : __('loaded', 'wca-cf7');
+                status = formData['remove_js'] ? __('removed', 'wca-cf7') : __('loaded', 'wca-cf7');
                 text = sprintf(__('Default Contact Form 7 plugin JS will be %s.', 'wca-cf7'), status);
                 break;
             case 'CSS':
-                status = formData['cf7_remove_css'] ? __('removed', 'wca-cf7') : __('loaded', 'wca-cf7');
+                status = formData['remove_css'] ? __('removed', 'wca-cf7') : __('loaded', 'wca-cf7');
                 text = sprintf(__('Default Contact Form 7 plugin CSS will be %s.', 'wca-cf7'), status);
                 break;
             case 'P':
-                status = formData['cf7_remove_autop'] ? __('does not', 'wca-cf7') : __('does', 'wca-cf7');
+                status = formData['remove_autop'] ? __('does not', 'wca-cf7') : __('does', 'wca-cf7');
                 text = sprintf(__('Contact Form 7 %s apply the "autop" filter to the form content.', 'wca-cf7'), status);
                 break;
             default:
@@ -83,11 +84,11 @@ const Options = (props) => {
         return text;
     };
 
-    const assetsControl = (formData['cf7_remove_js'] === true && formData['cf7_remove_css'] === true) === false;
+    const assetsControl = !(formData['remove_js'] && formData['remove_css']);
 
     useEffect(() => {
         if (!assetsControl) {
-            setFormData({ ...formData, 'cf7_clean_assets': '' });
+            setFormData({ ...formData, clean_assets: false });
         }
     }, [assetsControl]);
 
@@ -95,34 +96,55 @@ const Options = (props) => {
         <>
             <ToggleControl
                 label={<>
-                    {__('Remove JS?', 'wca-cf7')}
-                    <Tooltip text={__('Removing JS will cause the form submission to hard refresh the page!', 'wca-cf7')}>
-                        <Dashicon icon="editor-help" style={{ marginLeft: '1rem', color: 'var(--wp-admin-theme-color)' }} />
-                    </Tooltip>
+                    <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <span>{__('Remove JS?', 'wca-cf7')}</span>
+                        <DropdownMenu
+                            label={__('More Information', 'wca-cf7')}
+                            icon={<Dashicon icon="info" style={{ color: 'var(--wca--header--color)' }} />}
+                            toggleProps={{
+                                style: {
+                                    height: 'initial',
+                                    minWidth: 'initial',
+                                    padding: 0
+                                }
+                            }}
+                            popoverProps={{
+                                focusOnMount: 'container',
+                                position: 'bottom',
+                                noArrow: false,
+                            }}
+                        >
+                            {() => (
+                            <p style={{ minWidth: 150, margin: 0 }}>
+                                {__('Removing JS will cause the form submission to hard refresh the page!', 'wca-cf7')}
+                            </p>
+                            )}
+                        </DropdownMenu>
+                    </span>
                 </>}
                 help={getHelpText('JS')}
-                checked={formData['cf7_remove_js']}
-                onChange={value => setFormData({ ...formData, 'cf7_remove_js': value ? value : '' })}
+                checked={formData['remove_js']}
+                onChange={value => setFormData({ ...formData, remove_js: value })}
             />
             <ToggleControl
                 label={__('Remove CSS?', 'wca-cf7')}
                 help={getHelpText('CSS')}
-                checked={formData['cf7_remove_css']}
-                onChange={value => setFormData({ ...formData, 'cf7_remove_css': value ? value : '' })}
+                checked={formData['remove_css']}
+                onChange={value => setFormData({ ...formData, remove_css: value })}
             />
             {assetsControl && (
                 <ToggleControl
                     label={__('Optimize assets loading?', 'wca-cf7')}
                     help={getHelpText('assets')}
-                    checked={formData['cf7_clean_assets']}
-                    onChange={value => setFormData({ ...formData, 'cf7_clean_assets': value ? value : '' })}
+                    checked={formData['clean_assets']}
+                    onChange={value => setFormData({ ...formData, clean_assets: value })}
                 />
             )}
             <ToggleControl
                 label={__('Remove "autop" filter?', 'wca-cf7')}
                 help={getHelpText('P')}
-                checked={formData['cf7_remove_autop']}
-                onChange={value => setFormData({ ...formData, 'cf7_remove_autop': value ? value : '' })}
+                checked={formData['remove_autop']}
+                onChange={value => setFormData({ ...formData, remove_autop: value })}
             />
             <hr style={{ margin: '20px 0' }} />
             <Button
@@ -132,14 +154,7 @@ const Options = (props) => {
                 icon={loading && <Spinner />}
                 onClick={() => {
                     setLoading(true);
-
-                    const value = Object.keys(formData).reduce((result, key) => {
-                        result[key] = formData[key] === '' ? 'unset' : formData[key];
-
-                        return result;
-                    }, {});
-
-                    saveEntityRecord('wecodeart', 'settings', value).then(handleNotice);
+                    saveSettings({ contact_form_7: formData }, handleNotice);
                 }}
                 {...{ disabled: loading }}
             >

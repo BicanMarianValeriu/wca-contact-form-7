@@ -33,5 +33,13 @@ class Deactivator {
 	 */
 	public static function deactivate() {
 		Notifications::get_instance()->remove_notification_by_id( Admin::NOTICE_ID );
+
+		if ( ! function_exists( 'wecodeart_option' ) ) {
+			exit;
+		}
+
+		wecodeart_option( [
+			'contact_form_7' => 'unset'
+		] );
 	}
 }

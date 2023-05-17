@@ -77,7 +77,9 @@ class Frontend {
 	 * @return 	void
 	 */
 	public function options() {
-		if( wecodeart_option( 'cf7_remove_autop' ) ) {
+		$options = wecodeart_option( 'contact_form_7' );
+		
+		if( get_prop( $options, 'remove_autop' ) ) {
 			add_filter( 'wpcf7_autop_or_not',	'__return_false' );
 		}
 	}
@@ -91,17 +93,19 @@ class Frontend {
 	 * @return 	void
 	 */
 	public function assets() {
+		$options = wecodeart_option( 'contact_form_7' );
+
 		// If no form and control assets dont bother loading CF7 assets.
-		if( ! wecodeart_if( 'cf7_has_form' ) && wecodeart_option( 'cf7_clean_assets' ) ) {
+		if( ! wecodeart_if( 'cf7_has_form' ) && get_prop( $options, 'clean_assets' ) ) {
 			wp_deregister_style( 'contact-form-7' );
 			wp_deregister_script( 'contact-form-7' );
 		}
 
-		if( wecodeart_option( 'cf7_remove_css' ) ) {
+		if( get_prop( $options, 'remove_css' ) ) {
 			wp_deregister_style( 'contact-form-7' );
 		}
 
-		if( wecodeart_option( 'cf7_remove_js' ) ) {
+		if( get_prop( $options, 'remove_js' ) ) {
 			wp_deregister_script( 'contact-form-7' );
 		}
 
@@ -116,14 +120,14 @@ class Frontend {
 		wp_enqueue_style(
 			$this->make_handle(),
 			wp_normalize_path( sprintf( '%s/assets/%s/css/%s.css', WCA_CF7_EXT_URL, $path, $name ) ),
-			wecodeart( 'version' ),
+			$this->version,
 		);
 
 		wp_enqueue_script(
 			$this->make_handle(),
 			wp_normalize_path( sprintf( '%s/assets/%s/js/%s.js', WCA_CF7_EXT_URL, $path, $name ) ),
 			[ 'contact-form-7' ],
-			wecodeart( 'version' ),
+			$this->version,
 			true
 		);
 	}
