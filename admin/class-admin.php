@@ -38,26 +38,29 @@ class Admin {
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @since 	1.0.0
+	 * @version	1.0.0
+	 *
+	 * @var		string    $plugin_name    The ID of this plugin.
 	 */
 	private $plugin_name;
 
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
+	 * @since	1.0.0
+	 * @version	1.0.0
+	 *
+	 * @var		string    $version    The current version of this plugin.
 	 */
 	private $version;
 
 	/**
 	 * The config of this plugin.
 	 *
-	 * @since	1.0.0
-	 * @access	private
+	 * @since 	1.0.0
+	 * @version	1.0.0
+	 *
 	 * @var		mixed    $config    The config of this plugin.
 	 */
 	private $config;
@@ -65,7 +68,9 @@ class Admin {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since	1.0.0
+	 * @since 	1.0.0
+	 * @version	1.0.0
+	 *
 	 * @param	string    $plugin_name	The name of this plugin.
 	 * @param	string    $version    	The version of this plugin.
 	 */
@@ -78,7 +83,8 @@ class Admin {
     /**
 	 * Check if active
 	 *
-	 * @since    1.0.0
+	 * @since 	1.0.0
+	 * @version	1.0.0
 	 */
 	public function if_active() {
 		$notification = new Notification(
@@ -116,8 +122,8 @@ class Admin {
 	/**
 	 * Admin Assets
 	 *
-	 * @since	1.0.0
-	 * @version	1.0.1
+	 * @since 	1.0.0
+	 * @version	1.0.0
 	 */
 	public function assets() {
 		if( ! current_user_can( 'administrator' ) ) return;
@@ -148,8 +154,8 @@ class Admin {
 	/**
 	 * Update
 	 *
-	 * @since	1.0.0
-	 * @version	1.0.1
+	 * @since 	1.0.0
+	 * @version	1.0.0
 	 */
 	public function update( $transient ) {
 		if ( empty( $transient->checked ) ) {
@@ -181,7 +187,9 @@ class Admin {
 	/**
 	 * Upgrader/Updater
 	 *
-	 * @since 	1.0
+	 * @since 	1.0.0
+	 * @version	1.0.0
+	 *
 	 * @param 	boolean $true       always true
 	 * @param 	mixed   $hook_extra not used
 	 * @param 	array   $result     the result of the move
@@ -207,8 +215,9 @@ class Admin {
 	/**
 	 * Get Plugin info
 	 *
-	 * @since 	1.0
-	 * @version	1.0.1
+	 * @since 	1.0.0
+	 * @version	1.0.0
+	 *
 	 * @param 	bool    $false  always false
 	 * @param 	string  $action the API function being performed
 	 * @param 	object  $args   plugin arguments
@@ -236,7 +245,6 @@ class Admin {
 		$response->downloaded   = 0;
 		$response->last_updated = date( 'Y-m-d', strtotime( $published ) );
 		$response->sections		= [
-			'installation' 	=> WCA_CF7_EXT_DIR,
 			'changelog' 	=> sprintf(
 				__( 'To read the change history for the latest plugin release, please go to the %s.', 'wca-cf7' ),
 				sprintf(
@@ -257,7 +265,7 @@ class Admin {
 	 * Meta
 	 *
 	 * @since	1.0.0
-	 * @version	1.0.1
+	 * @version	1.0.0
 	 */
 	public function meta( $links, $file ) {		
 		// If we are not on the correct plugin, abort.
@@ -299,7 +307,9 @@ class Admin {
 	 * Get Github Data
 	 *
 	 * @since	1.0.0
-	 * @version	1.0.1
+	 * @version	1.0.0
+	 *
+	 * @return 	array
 	 */
 	public static function get_github_data() {
 		$api_url	= sprintf( 'https://api.github.com/repos/%s/releases/latest', self::REPOSITORY );
@@ -317,8 +327,8 @@ class Admin {
 	/**
 	 * Get Plugin data
 	 *
-	 * @since 	1.0.1
-	 * @version	1.0.1
+	 * @since 	1.0.0
+	 * @version	1.0.0
 	 *
 	 * @return 	object $data the data
 	 */
