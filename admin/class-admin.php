@@ -31,7 +31,9 @@ class Admin {
 
 	use Asset;
 
-	const NOTICE_ID = 'wecodeart/plugin/cf7';
+	const NOTICE_ID 	= 'wecodeart/plugin/cf7';
+	const CACHE_ID 		= 'wecodeart/transient/extension/cf7/update';
+	const REPOSITORY 	= 'BicanMarianValeriu/wca-contact-form-7';
 
 	/**
 	 * The ID of this plugin.
@@ -147,7 +149,7 @@ class Admin {
 	 * Update
 	 *
 	 * @since	1.0.0
-	 * @version	1.0.0
+	 * @version	1.0.1
 	 */
 	public function update( $transient ) {
 		if ( empty( $transient->checked ) ) {
@@ -162,8 +164,8 @@ class Admin {
 			$response 				= new \stdClass;
 			$response->new_version 	= $version;
 			$response->slug 		= dirname( WCA_CF7_EXT_BASE );
-			$response->url 			= 'https://github.com/BicanMarianValeriu/wca-contact-form-7';
-			$response->package 		= sprintf( 'https://api.github.com/repos/BicanMarianValeriu/wca-contact-form-7/zipball/%s', $tag_name );
+			$response->url 			= sprintf( 'https://github.com/%s', self::REPOSITORY );
+			$response->package 		= sprintf( 'https://api.github.com/repos/%s/zipball/%s', self::REPOSITORY, $tag_name );
 			// $response->package	= sprintf( 'https://github.com/BicanMarianValeriu/wca-contact-form-7/archive/refs/tags/%s.zip', $tag_name );
 			// $response->upgrade_notice	= '';
 
@@ -237,7 +239,7 @@ class Admin {
 			'description' 	=> $plugin['Description'],
 			'changelog' 	=> '---soon---'
 		];
-		$response->download_link = sprintf( 'https://api.github.com/repos/BicanMarianValeriu/wca-contact-form-7/zipball/%s', $tag_name );
+		$response->download_link = sprintf( 'https://api.github.com/repos/%s/zipball/%s', self::REPOSITORY, $tag_name );
 
 		return $response;
 	}
@@ -288,17 +290,16 @@ class Admin {
 	 * Get Github Data
 	 *
 	 * @since	1.0.0
-	 * @version	1.0.0
+	 * @version	1.0.1
 	 */
-	public function get_github_data()  {
-		$cache_key  = 'wecodeart/transient/extension/cf7/update';
-		$api_url	= 'https://api.github.com/repos/BicanMarianValeriu/wca-contact-form-7/releases/latest';
+	public function get_github_data() {
+		$api_url	= sprintf( 'https://api.github.com/repos/%s/releases/latest', self::REPOSITORY );
 
-		if ( false === ( $response = get_transient( $cache_key ) ) ) {
+		if ( false === ( $response = get_transient( self::CACHE_ID ) ) ) {
 			$request	= new Request( $api_url, [] );
 			$request->send( $request::METHOD_GET );
 			$response = $request->get_response_body( true );
-			set_transient( $cache_key, $response, 12 * HOUR_IN_SECONDS );
+			set_transient( self::CACHE_ID, $response, 12 * HOUR_IN_SECONDS );
 		}
 
 		return $response;			
