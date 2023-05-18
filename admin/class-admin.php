@@ -196,9 +196,9 @@ class Admin {
 		$activate 				= activate_plugin( WP_PLUGIN_DIR. '/' . WCA_CF7_EXT_BASE );
 
 		// Output the update message
-		$fail  = __( 'The plugin has been updated, but could not be reactivated. Please reactivate it manually.', 'wca-cf7' );
-		$success = __( 'Plugin reactivated successfully.', 'wca-cf7' );
-		echo is_wp_error( $activate ) ? $fail : $success;
+		echo is_wp_error( $activate ) ?
+			esc_html__( 'The plugin has been updated, but could not be reactivated. Please reactivate it manually.', 'wca-cf7' ) :
+			esc_html__( 'Plugin reactivated successfully.', 'wca-cf7' );
 
 		return $result;
 	}
@@ -207,6 +207,7 @@ class Admin {
 	 * Get Plugin info
 	 *
 	 * @since 	1.0
+	 * @version	1.0.1
 	 * @param 	bool    $false  always false
 	 * @param 	string  $action the API function being performed
 	 * @param 	object  $args   plugin arguments
@@ -245,7 +246,7 @@ class Admin {
 	 * Meta
 	 *
 	 * @since	1.0.0
-	 * @version	1.0.0
+	 * @version	1.0.1
 	 */
 	public function meta( $plugin_meta, $plugin_file ) {		
 		// If we are not on the correct plugin, abort.
@@ -253,8 +254,8 @@ class Admin {
 			return $plugin_meta;
 		}
 
-		$review_link  = '<a href="https://wordpress.org/support/plugin/wca-contact-form-7/reviews/?filter=5" aria-label="' . esc_attr__( 'Review plugin on WordPress.org', 'wca-cf7' ) . '" target="_blank">';
-		$review_link .= esc_html__( 'Leave a Review', 'wca-cf7' );
+		$review_link  = '<a href="https://github.com/BicanMarianValeriu/wca-contact-form-7" aria-label="' . esc_attr__( 'Give it a star on GitHub', 'wca-cf7' ) . '" target="_blank">';
+		$review_link .= esc_html__( 'Star on GitHub', 'wca-cf7' );
 		$review_link .= '</a>';
 
 		return array_merge( $plugin_meta, [
