@@ -131,17 +131,14 @@ function optionsPanel(panels) {
 }
 
 const Options = props => {
-  var _settings;
-
   const {
     settings,
-    wecodeartSettings,
     saveSettings,
     isRequesting,
     createNotice
   } = props;
 
-  if (isRequesting || ((_settings = !settings) !== null && _settings !== void 0 ? _settings : wecodeartSettings)) {
+  if (isRequesting || !settings) {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Placeholder, {
       icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Spinner, null),
       label: __('Loading', 'wca-cf7'),
@@ -156,7 +153,7 @@ const Options = props => {
       contact_form_7
     } = _ref;
     return contact_form_7;
-  })(settings !== null && settings !== void 0 ? settings : wecodeartSettings);
+  })(settings);
 
   const [formData, setFormData] = useState(apiOptions);
 

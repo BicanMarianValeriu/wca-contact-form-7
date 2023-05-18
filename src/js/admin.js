@@ -39,9 +39,9 @@ function optionsPanel(panels) {
 }
 
 const Options = (props) => {
-    const { settings, wecodeartSettings, saveSettings, isRequesting, createNotice } = props;
+    const { settings, saveSettings, isRequesting, createNotice } = props;
 
-    if (isRequesting || (!settings ?? wecodeartSettings)) {
+    if (isRequesting || !settings) {
         return <Placeholder {...{
             icon: <Spinner />,
             label: __('Loading', 'wca-cf7'),
@@ -50,7 +50,7 @@ const Options = (props) => {
     }
 
     const [loading, setLoading] = useState(null);
-    const apiOptions = (({ contact_form_7 }) => (contact_form_7))(settings ?? wecodeartSettings);
+    const apiOptions = (({ contact_form_7 }) => (contact_form_7))(settings);
     const [formData, setFormData] = useState(apiOptions);
 
     const handleNotice = () => {

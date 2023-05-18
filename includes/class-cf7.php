@@ -170,11 +170,16 @@ class CF7 implements Integration {
 	private function define_admin_hooks() {
 		$admin = new CF7\Admin( $this->get_plugin_name(), $this->get_version(), $this->get_config() );
 
-		$this->loader->add_action( 'admin_init', 					$admin, 'if_active' );
-		$this->loader->add_action( 'admin_enqueue_scripts',			$admin, 'assets' 	);
-		$this->loader->add_filter( 'site_transient_update_plugins',	$admin, 'update',	20, 3 );
-		$this->loader->add_filter( 'plugin_action_links',			$admin, 'links', 	20, 2 );
-		$this->loader->add_filter( 'plugin_row_meta',				$admin, 'meta', 	20, 2 );
+		// Admin init/scripts
+		$this->loader->add_action( 'admin_init', 							$admin, 'if_active' 	);
+		$this->loader->add_action( 'admin_enqueue_scripts',					$admin, 'assets' 		);
+		// Handle Updates
+		$this->loader->add_filter( 'pre_set_site_transient_update_plugins',	$admin, 'update' 		);
+		$this->loader->add_filter( 'upgrader_post_install',					$admin, 'install', 	20, 3 );
+		// Handle Plugin Info
+		$this->loader->add_filter( 'plugins_api', 							$admin, 'info', 	20, 3 );
+		$this->loader->add_filter( 'plugin_action_links',					$admin, 'links', 	20, 2 );
+		$this->loader->add_filter( 'plugin_row_meta',						$admin, 'meta', 	20, 2 );
 	}
 
 	/**
