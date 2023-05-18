@@ -149,39 +149,6 @@ class Admin {
 	 * @since	1.0.0
 	 * @version	1.0.0
 	 */
-	// public function update( $transient ) {
-	// 	if ( ! is_object( $transient ) ) {
-	// 		return $transient;
-	// 	}
-
-	// 	if ( ! isset( $transient->response ) || ! is_array( $transient->response ) ){
-	// 		$transient->response = [];
-	// 	}
-		
-	// 	$response 	= self::get_github_data();
-	// 	$tag_name 	= get_prop( $response, 'tag_name', 'v1.0.1' );
-	// 	$version 	= str_replace( 'v', '', $tag_name );
-
-	// 	if( \version_compare( WCA_CF7_EXT_VER, $version, '<' ) ) {
-	// 		$transient->response[WCA_CF7_EXT_BASE] = (object) [
-	// 			'slug'     		=> 'wca-contact-form-7',
-	// 			'plugin'		=> WCA_CF7_EXT_BASE,
-	// 			'new_version'	=> $version,
-	// 			'url'          	=> 'https://github.com/BicanMarianValeriu/wca-contact-form-7/commits/' . $tag_name,
-	// 			'package'      	=> sprintf( 'https://github.com/BicanMarianValeriu/wca-contact-form-7/archive/refs/tags/%s.zip', $tag_name ),
-	// 			'upgrade_notice'=> '',
-	// 		];
-	// 	}
-
-	// 	return $transient;
-	// }
-
-	/**
-	 * Update
-	 *
-	 * @since	1.0.0
-	 * @version	1.0.0
-	 */
 	public function update( $transient ) {
 		if ( empty( $transient->checked ) ) {
 			return $transient;
@@ -191,12 +158,13 @@ class Admin {
 		$tag_name 	= get_prop( $latest, 'tag_name', 'v1.0.0' );
 		$version 	= str_replace( 'v', '', $tag_name );
 
-		if ( version_compare( $version, $this->version ) ) {
+		if ( 1 === version_compare( $version, $this->version ) ) {
 			$response 				= new \stdClass;
 			$response->new_version 	= $version;
-			$response->slug 		= WCA_CF7_EXT_BASE;
-			$response->url 			= 'https://github.com/BicanMarianValeriu/wca-contact-form';
-			$response->package 		= 'https://api.github.com/repos/BicanMarianValeriu/wca-contact-form-7/zipball/' . $tag_name;
+			$response->slug 		= dirname( WCA_CF7_EXT_BASE );
+			$response->url 			= 'https://github.com/BicanMarianValeriu/wca-contact-form-7';
+			$response->package 		= sprintf( 'https://api.github.com/repos/BicanMarianValeriu/wca-contact-form-7/zipball/%s', $tag_name );
+			// $response->package	= sprintf( 'https://github.com/BicanMarianValeriu/wca-contact-form-7/archive/refs/tags/%s.zip', $tag_name );
 			// $response->upgrade_notice	= '';
 
 			// If response is false, don't alter the transient
@@ -256,7 +224,7 @@ class Admin {
 		$tag_name 	= get_prop( $latest, 'tag_name', 'v1.0.0' );
 		$published  = get_prop( $latest, 'published_at' );
 
-		$response->slug 		= WCA_CF7_EXT_BASE;
+		$response->slug 		= dirname( WCA_CF7_EXT_BASE );
 		$response->plugin_name 	= $this->plugin_name;
 		$response->version 		= str_replace( 'v', '', $tag_name );
 		$response->author 		= $plugin['Author'];
@@ -268,7 +236,7 @@ class Admin {
 			'description' 	=> $plugin['Description'],
 			'changelog' 	=> '---soon---'
 		];
-		$response->download_link = sprintf( 'https://github.com/BicanMarianValeriu/wca-contact-form-7/archive/refs/tags/%s.zip', $tag_name );
+		$response->download_link = sprintf( 'https://api.github.com/repos/BicanMarianValeriu/wca-contact-form-7/zipball/%s', $tag_name );
 
 		return $response;
 	}
