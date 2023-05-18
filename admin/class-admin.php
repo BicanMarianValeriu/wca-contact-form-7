@@ -88,7 +88,7 @@ class Admin {
 				</div>',
 				esc_html__( 'Awesome, WCA: Contact Form 7 extension is activated!', 'wca-cf7' ),
 				esc_html__( 'Go to Theme Options in order to setup your preferences.', 'wca-cf7' ),
-				esc_url( admin_url( '/themes.php?page=wecodeart&tab=extensions' ) ),
+				esc_url( admin_url( '/themes.php?page=wecodeart&tab=extensions#wca-cf7' ) ),
 				esc_html__( 'Awesome, show me the options!', 'wca-cf7' )
 			),
 			[
@@ -123,7 +123,7 @@ class Admin {
 		$path = wecodeart_if( 'is_dev_mode' ) ? 'unminified' : 'minified';
 		$name = wecodeart_if( 'is_dev_mode' ) ? 'admin' : 'admin.min';
 		$data = [
-			'version' 		=> wecodeart( 'version' ),
+			'version' 		=> $this->version,
 			'dependencies'	=> [
 				'wp-i18n',
 				'wp-hooks',
@@ -134,7 +134,7 @@ class Admin {
 
 		wp_register_script( 
 			$this->make_handle(),
-			wp_normalize_path( sprintf( '%s/assets/%s/js/%s.js', plugin_dir_url( __DIR__ ), $path, $name ) ),
+			wp_normalize_path( sprintf( '%s/assets/%s/js/%s.js', WCA_CF7_EXT_URL, $path, $name ) ),
 			$data['dependencies'], 
 			$data['version'], 
 			true 
@@ -149,46 +149,128 @@ class Admin {
 	 * @since	1.0.0
 	 * @version	1.0.0
 	 */
+	// public function update( $transient ) {
+	// 	if ( ! is_object( $transient ) ) {
+	// 		return $transient;
+	// 	}
+
+	// 	if ( ! isset( $transient->response ) || ! is_array( $transient->response ) ){
+	// 		$transient->response = [];
+	// 	}
+		
+	// 	$response 	= self::get_github_data();
+	// 	$tag_name 	= get_prop( $response, 'tag_name', 'v1.0.1' );
+	// 	$version 	= str_replace( 'v', '', $tag_name );
+
+	// 	if( \version_compare( WCA_CF7_EXT_VER, $version, '<' ) ) {
+	// 		$transient->response[WCA_CF7_EXT_BASE] = (object) [
+	// 			'slug'     		=> 'wca-contact-form-7',
+	// 			'plugin'		=> WCA_CF7_EXT_BASE,
+	// 			'new_version'	=> $version,
+	// 			'url'          	=> 'https://github.com/BicanMarianValeriu/wca-contact-form-7/commits/' . $tag_name,
+	// 			'package'      	=> sprintf( 'https://github.com/BicanMarianValeriu/wca-contact-form-7/archive/refs/tags/%s.zip', $tag_name ),
+	// 			'upgrade_notice'=> '',
+	// 		];
+	// 	}
+
+	// 	return $transient;
+	// }
+
+	/**
+	 * Update
+	 *
+	 * @since	1.0.0
+	 * @version	1.0.0
+	 */
 	public function update( $transient ) {
-		if ( ! is_object( $transient ) ) {
+		if ( empty( $transient->checked ) ) {
 			return $transient;
 		}
-
-		if ( ! isset( $transient->response ) || ! is_array( $transient->response ) ){
-			$transient->response = [];
-		}
-
-		$cache_key  = 'wecodeart/transient/extension/cf7/update';
-		$filename 	= 'wca-contact-form-7/wca-contact-form-7.php';
-		$api_url	= 'https://api.github.com/repos/BicanMarianValeriu/wca-contact-form-7/releases/latest';
 		
-		if ( false === ( $response = get_transient($cache_key ) ) ) {
-			$request	= new Request( $api_url, [] );
-			$request->send( $request::METHOD_GET );
-			$response = $request->get_response_body( true );
-			set_transient( $cache_key, $response, 12 * HOUR_IN_SECONDS );
-		}
+		$latest 	= self::get_github_data();
+		$tag_name 	= get_prop( $latest, 'tag_name', 'v1.0.0' );
+		$version 	= str_replace( 'v', '', $tag_name );
 
-		if( $response ) {
-			$tag_name 	= get_prop( $response, 'tag_name', 'v1.0.1' );
-			$version 	= str_replace( 'v', '', $tag_name );
+		if ( version_compare( $version, $this->version ) ) {
+			$response 				= new \stdClass;
+			$response->new_version 	= $version;
+			$response->slug 		= WCA_CF7_EXT_BASE;
+			$response->url 			= 'https://github.com/BicanMarianValeriu/wca-contact-form';
+			$response->package 		= 'https://api.github.com/repos/BicanMarianValeriu/wca-contact-form-7/zipball/' . $tag_name;
+			// $response->upgrade_notice	= '';
 
-			if( \version_compare( WCA_CF7_EXT_VER, $version, '<' ) ) {
-				$transient->response[$filename] = (object) [
-					'slug'         	=> 'wca-google-tools-extension',
-					'plugin'		=> $filename,
-					'new_version'	=> $version,
-					'url'          	=> 'https://github.com/BicanMarianValeriu/wca-contact-form-7/archive/refs/tags/' . $tag_name,
-					'package'      	=> sprintf( 'https://github.com/BicanMarianValeriu/wca-contact-form-7/archive/refs/tags/%s.zip', $tag_name ),
-					'upgrade_notice'=> 'Test',
-				];
-			} else {
-				unset( $transient->response[ $filename ] );
+			// If response is false, don't alter the transient
+			if ( false !== $response ) {
+				$transient->response[ WCA_CF7_EXT_BASE ] = $response;
 			}
+		}
+		
+		return $transient;
+	}
 
+	/**
+	 * Upgrader/Updater
+	 *
+	 * @since 	1.0
+	 * @param 	boolean $true       always true
+	 * @param 	mixed   $hook_extra not used
+	 * @param 	array   $result     the result of the move
+	 *
+	 * @return 	array 	$result the result of the move
+	 */
+	public function install( $true, $hook_extra, $result ) {
+		global $wp_filesystem;
+
+		// Move & Activate
+		$proper_destination 	= WP_PLUGIN_DIR. '/'. dirname( WCA_CF7_EXT_BASE );
+		$wp_filesystem->move( $result['destination'], $proper_destination );
+		$result['destination'] 	= $proper_destination;
+		$activate 				= activate_plugin( WP_PLUGIN_DIR. '/' . WCA_CF7_EXT_BASE );
+
+		// Output the update message
+		$fail  = __( 'The plugin has been updated, but could not be reactivated. Please reactivate it manually.', 'wca-cf7' );
+		$success = __( 'Plugin reactivated successfully.', 'wca-cf7' );
+		echo is_wp_error( $activate ) ? $fail : $success;
+
+		return $result;
+	}
+
+	/**
+	 * Get Plugin info
+	 *
+	 * @since 	1.0
+	 * @param 	bool    $false  always false
+	 * @param 	string  $action the API function being performed
+	 * @param 	object  $args   plugin arguments
+	 *
+	 * @return 	object $response the plugin info
+	 */
+	public function info( $false, $action, $response ) {
+		// Check if this call API is for the right plugin
+		if ( ! isset( $response->slug ) || $response->slug !== dirname( WCA_CF7_EXT_BASE ) ) {
+			return false;
 		}
 
-		return $transient;
+		$plugin		= get_plugin_data( WP_PLUGIN_DIR . '/' . WCA_CF7_EXT_BASE );
+		$latest 	= self::get_github_data();
+		$tag_name 	= get_prop( $latest, 'tag_name', 'v1.0.0' );
+		$published  = get_prop( $latest, 'published_at' );
+
+		$response->slug 		= WCA_CF7_EXT_BASE;
+		$response->plugin_name 	= $this->plugin_name;
+		$response->version 		= str_replace( 'v', '', $tag_name );
+		$response->author 		= $plugin['Author'];
+		$response->homepage		= $plugin['PluginURI'];
+		$response->requires 	= $plugin['RequiresWP'];
+		$response->downloaded   = 0;
+		$response->last_updated = date( 'Y-m-d', strtotime( $published ) );
+		$response->sections		= [
+			'description' 	=> $plugin['Description'],
+			'changelog' 	=> '---soon---'
+		];
+		$response->download_link = sprintf( 'https://github.com/BicanMarianValeriu/wca-contact-form-7/archive/refs/tags/%s.zip', $tag_name );
+
+		return $response;
 	}
 
 	/**
@@ -197,13 +279,59 @@ class Admin {
 	 * @since	1.0.0
 	 * @version	1.0.0
 	 */
-	public function meta( $plugin_meta, $plugin_file, $plugin_data, $status ) {
-		$filename 	= 'wca-contact-form-7/wca-contact-form-7.php';
-		
-		if( $plugin_file === $filename ) {
-			// Do stuff
+	public function meta( $plugin_meta, $plugin_file ) {		
+		// If we are not on the correct plugin, abort.
+		if( WCA_CF7_EXT_BASE !== $plugin_file) {
+			return $plugin_meta;
 		}
-	
-		return $plugin_meta;
+
+		$review_link  = '<a href="https://wordpress.org/support/plugin/wca-contact-form-7/reviews/?filter=5" aria-label="' . esc_attr__( 'Review plugin on WordPress.org', 'wca-cf7' ) . '" target="_blank">';
+		$review_link .= esc_html__( 'Leave a Review', 'wca-cf7' );
+		$review_link .= '</a>';
+
+		return array_merge( $plugin_meta, [
+			'review' => $review_link,
+		] );
+	}
+
+	/**
+	 * Links
+	 *
+	 * @since	1.0.0
+	 * @version	1.0.0
+	 */
+	public function links( $plugin_links, $plugin_file ) {
+		// If we are not on the correct plugin, abort.
+		if ( WCA_CF7_EXT_BASE !== $plugin_file ) {
+			return $plugin_links;
+		}
+
+		$settings_link  = '<a href="' . esc_url( admin_url( '/themes.php?page=wecodeart&tab=extensions#wca-cf7' ) ) . '" aria-label="' . esc_attr__( 'Navigate to the extension settings.', 'wca-cf7' ) . '">';
+		$settings_link .= esc_html__( 'Settings', 'wca-cf7' );
+		$settings_link .= '</a>';
+
+		array_unshift( $plugin_links, $settings_link );
+
+		return $plugin_links;
+	}
+
+	/**
+	 * Get Github Data
+	 *
+	 * @since	1.0.0
+	 * @version	1.0.0
+	 */
+	public function get_github_data()  {
+		$cache_key  = 'wecodeart/transient/extension/cf7/update';
+		$api_url	= 'https://api.github.com/repos/BicanMarianValeriu/wca-contact-form-7/releases/latest';
+
+		if ( false === ( $response = get_transient( $cache_key ) ) ) {
+			$request	= new Request( $api_url, [] );
+			$request->send( $request::METHOD_GET );
+			$response = $request->get_response_body( true );
+			set_transient( $cache_key, $response, 12 * HOUR_IN_SECONDS );
+		}
+
+		return $response;			
 	}
 }

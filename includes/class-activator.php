@@ -46,10 +46,12 @@ class Activator {
 		}
 
 		wecodeart_option( [
-			'cf7_remove_js'		=> false,
-			'cf7_remove_css'	=> true,
-			'cf7_remove_autop'	=> false,
-			'cf7_clean_assets'	=> true,
+			'contact_form_7' => [
+				'remove_js'		=> false,
+				'remove_css'	=> true,
+				'remove_autop'	=> false,
+				'clean_assets'	=> true,
+			]
 		] );
 	}
 

@@ -35,8 +35,5 @@ if ( ! function_exists( 'wecodeart_option' ) ) {
 }
 
 wecodeart_option( [
-	'cf7_clean_assets'	=> 'unset',
-	'cf7_remove_js'		=> 'unset',
-	'cf7_remove_css'	=> 'unset',
-	'cf7_remove_autop'	=> 'unset',
+	'contact_form_7' => 'unset',
 ] );
