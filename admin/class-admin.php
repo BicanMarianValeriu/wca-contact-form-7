@@ -115,7 +115,7 @@ class Admin {
 	 * Admin Assets
 	 *
 	 * @since	1.0.0
-	 * @version	1.0.0
+	 * @version	1.0.1
 	 */
 	public function assets() {
 		if( ! current_user_can( 'administrator' ) ) return;
@@ -134,7 +134,7 @@ class Admin {
 
 		wp_register_script( 
 			$this->make_handle(),
-			wp_normalize_path( sprintf( '%s/assets/%s/js/%s.js', WCA_CF7_EXT_URL, $path, $name ) ),
+			sprintf( '%s/assets/%s/js/%s.js', untrailingslashit( WCA_CF7_EXT_URL ), $path, $name ),
 			$data['dependencies'], 
 			$data['version'], 
 			true 
