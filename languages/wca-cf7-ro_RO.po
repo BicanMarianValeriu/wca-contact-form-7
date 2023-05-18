@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WCA: Contact Form 7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-02 23:19+0000\n"
-"PO-Revision-Date: 2023-05-14 07:53+0000\n"
+"PO-Revision-Date: 2023-05-18 05:17+0000\n"
 "Last-Translator: \n"
 "Language-Team: Română\n"
 "Language: ro_RO\n"
@@ -16,11 +16,11 @@ msgstr ""
 "X-Loco-Version: 2.6.4; wp-6.2\n"
 "X-Domain: wca-cf7"
 
-#: admin/class-admin.php:91
+#: admin/class-admin.php:92
 msgid "Awesome, show me the options!"
 msgstr "Minunat, arată-mi opțiunile!"
 
-#: admin/class-admin.php:88
+#: admin/class-admin.php:89
 msgid "Awesome, WCA: Contact Form 7 extension is activated!"
 msgstr "Minunat, WCA: Extensia Formular de contact 7 este activată!"
 
@@ -28,24 +28,52 @@ msgstr "Minunat, WCA: Extensia Formular de contact 7 este activată!"
 msgid "Bican Marian Valeriu"
 msgstr "Bican Marian Valeriu"
 
-#: admin/class-admin.php:89
+#: admin/class-admin.php:257
+msgid "Give it a star on GitHub"
+msgstr "Dați-i o stea pe GitHub"
+
+#: admin/class-admin.php:90
 #| msgid "Go to theme extension options in order to setup your preferences."
 msgid "Go to Theme Options in order to setup your preferences."
 msgstr "Accesați opțiunile temei pentru a vă configura preferințele."
 
 #. URI of the plugin
-msgid "https://www.wecodeart.com/"
-msgstr "https://www.wecodeart.com/"
+msgid "https://github.com/BicanMarianValeriu/wca-contact-form-7"
+msgstr "https://github.com/BicanMarianValeriu/wca-contact-form-7"
 
 #. Author URI of the plugin
 msgid "https://www.wecodeart.com/about/"
 msgstr "https://www.wecodeart.com/about/"
 
-#: includes/class-activator.php:69
+#: admin/class-admin.php:278
+msgid "Navigate to the extension settings."
+msgstr "Navigați la setările extensiei."
+
+#: admin/class-admin.php:201
+msgid "Plugin reactivated successfully."
+msgstr "Pluginul a fost reactivat cu succes."
+
+#: admin/class-admin.php:279
+msgid "Settings"
+msgstr "Setări"
+
+#: admin/class-admin.php:258
+msgid "Star on GitHub"
+msgstr "Dăi stea pe GitHub"
+
+#: admin/class-admin.php:200
+msgid ""
+"The plugin has been updated, but could not be reactivated. Please reactivate "
+"it manually."
+msgstr ""
+"Pluginul a fost actualizat, dar nu a putut fi reactivat. Vă rugăm să-l "
+"reactivați manual."
+
+#: includes/class-activator.php:71
 msgid "This extension requires Contact Form 7 plugin installed and active."
 msgstr "Această extensie necesită pluginul Contact Form 7 instalat și activ."
 
-#: includes/class-activator.php:68
+#: includes/class-activator.php:70
 msgid ""
 "This extension requires WeCodeArt Framework (or a skin) installed and active."
 msgstr ""
