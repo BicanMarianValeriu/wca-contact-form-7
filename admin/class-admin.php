@@ -250,18 +250,18 @@ class Admin {
 	 * @since	1.0.0
 	 * @version	1.0.1
 	 */
-	public function meta( $plugin_meta, $plugin_file ) {		
+	public function meta( $links, $file ) {		
 		// If we are not on the correct plugin, abort.
-		if( WCA_CF7_EXT_BASE !== $plugin_file) {
-			return $plugin_meta;
+		if( WCA_CF7_EXT_BASE !== $file) {
+			return $links;
 		}
 
-		$review_link  = '<a href="https://github.com/BicanMarianValeriu/wca-contact-form-7" aria-label="' . esc_attr__( 'Give it a star on GitHub', 'wca-cf7' ) . '" target="_blank">';
-		$review_link .= esc_html__( 'Star on GitHub', 'wca-cf7' );
-		$review_link .= '</a>';
+		$review  = '<a href="https://github.com/BicanMarianValeriu/wca-contact-form-7" aria-label="' . esc_attr__( 'Give it a star on GitHub', 'wca-cf7' ) . '" target="_blank">';
+		$review .= esc_html__( 'Star on GitHub', 'wca-cf7' );
+		$review .= '</a>';
 
-		return array_merge( $plugin_meta, [
-			'review' => $review_link,
+		return array_merge( $links, [
+			'review' => $review,
 		] );
 	}
 
@@ -271,19 +271,19 @@ class Admin {
 	 * @since	1.0.0
 	 * @version	1.0.0
 	 */
-	public function links( $plugin_links, $plugin_file ) {
+	public function links( $links, $file ) {
 		// If we are not on the correct plugin, abort.
-		if ( WCA_CF7_EXT_BASE !== $plugin_file ) {
-			return $plugin_links;
+		if ( WCA_CF7_EXT_BASE !== $file ) {
+			return $links;
 		}
 
-		$settings_link  = '<a href="' . esc_url( admin_url( '/themes.php?page=wecodeart&tab=extensions#wca-cf7' ) ) . '" aria-label="' . esc_attr__( 'Navigate to the extension settings.', 'wca-cf7' ) . '">';
-		$settings_link .= esc_html__( 'Settings', 'wca-cf7' );
-		$settings_link .= '</a>';
+		$settings  = '<a href="' . esc_url( admin_url( '/themes.php?page=wecodeart&tab=extensions#wca-cf7' ) ) . '" aria-label="' . esc_attr__( 'Navigate to the extension settings.', 'wca-cf7' ) . '">';
+		$settings .= esc_html__( 'Settings', 'wca-cf7' );
+		$settings .= '</a>';
 
-		array_unshift( $plugin_links, $settings_link );
+		array_unshift( $links, $settings );
 
-		return $plugin_links;
+		return $links;
 	}
 
 	/**
