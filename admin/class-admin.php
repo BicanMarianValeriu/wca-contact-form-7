@@ -192,10 +192,9 @@ class Admin {
 		global $wp_filesystem;
 
 		// Move & Activate
-		$proper_destination 	= WP_PLUGIN_DIR. '/'. dirname( WCA_CF7_EXT_BASE );
-		$wp_filesystem->move( $result['destination'], $proper_destination );
-		$result['destination'] 	= $proper_destination;
-		$activate 				= activate_plugin( WP_PLUGIN_DIR. '/' . WCA_CF7_EXT_BASE );
+		$wp_filesystem->move( $result['destination'], WCA_CF7_EXT_DIR );
+		$result['destination'] 	= WCA_CF7_EXT_DIR;
+		$activate 				= activate_plugin( WCA_CF7_EXT_BASE );
 
 		// Output the update message
 		echo is_wp_error( $activate ) ?
@@ -222,24 +221,34 @@ class Admin {
 			return false;
 		}
 
-		$plugin		= get_plugin_data( WP_PLUGIN_DIR . '/' . WCA_CF7_EXT_BASE );
+		$plugin		= self::get_plugin_data();
 		$latest 	= self::get_github_data();
 		$tag_name 	= get_prop( $latest, 'tag_name', 'v1.0.0' );
 		$published  = get_prop( $latest, 'published_at' );
 
 		$response->slug 		= dirname( WCA_CF7_EXT_BASE );
-		$response->plugin_name 	= $this->plugin_name;
 		$response->version 		= str_replace( 'v', '', $tag_name );
+		$response->plugin_name 	= $plugin['Name'];
 		$response->author 		= $plugin['Author'];
 		$response->homepage		= $plugin['PluginURI'];
 		$response->requires 	= $plugin['RequiresWP'];
+		$response->requires_php	= $plugin['RequiresPHP'];
 		$response->downloaded   = 0;
 		$response->last_updated = date( 'Y-m-d', strtotime( $published ) );
 		$response->sections		= [
+			'installation' 	=> WCA_CF7_EXT_DIR,
+			'changelog' 	=> sprintf(
+				__( 'To read the change history for the latest plugin release, please go to the %s.', 'wca-cf7' ),
+				sprintf(
+					'<a href="%s" target="_blank">%s</a>',
+					esc_url( sprintf( 'https://github.com/%s/releases/latest', self::REPOSITORY ) ),
+					esc_html__( 'release page', 'wca-cf7' )
+				)
+			),
 			'description' 	=> $plugin['Description'],
-			'changelog' 	=> '---soon---'
 		];
-		$response->download_link = sprintf( 'https://api.github.com/repos/%s/zipball/%s', self::REPOSITORY, $tag_name );
+		$response->donate_link 		= 'https://www.paypal.com/donate?hosted_button_id=PV9A4JDX84Z3W';
+		$response->download_link 	= sprintf( 'https://api.github.com/repos/%s/zipball/%s', self::REPOSITORY, $tag_name );
 
 		return $response;
 	}
@@ -292,7 +301,7 @@ class Admin {
 	 * @since	1.0.0
 	 * @version	1.0.1
 	 */
-	public function get_github_data() {
+	public static function get_github_data() {
 		$api_url	= sprintf( 'https://api.github.com/repos/%s/releases/latest', self::REPOSITORY );
 
 		if ( false === ( $response = get_transient( self::CACHE_ID ) ) ) {
@@ -303,5 +312,19 @@ class Admin {
 		}
 
 		return $response;			
+	}
+
+	/**
+	 * Get Plugin data
+	 *
+	 * @since 	1.0.1
+	 * @version	1.0.1
+	 *
+	 * @return 	object $data the data
+	 */
+	public static function get_plugin_data() {
+		include_once ABSPATH . '/wp-admin/includes/plugin.php';
+
+		return get_plugin_data( WP_PLUGIN_DIR . '/' . WCA_CF7_EXT_BASE );
 	}
 }
