@@ -175,10 +175,7 @@ class Admin {
 			// $response->package	= sprintf( 'https://github.com/BicanMarianValeriu/wca-contact-form-7/archive/refs/tags/%s.zip', $tag_name );
 			// $response->upgrade_notice	= '';
 
-			// If response is false, don't alter the transient
-			if ( false !== $response ) {
-				$transient->response[ WCA_CF7_EXT_BASE ] = $response;
-			}
+			$transient->response[ WCA_CF7_EXT_BASE ] = $response;
 		}
 		
 		return $transient;
