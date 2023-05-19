@@ -264,13 +264,13 @@ class Admin {
 	 * @since	1.0.0
 	 * @version	1.0.0
 	 */
-	public function meta( $links, $file ) {		
+	public function meta( $links, $file ) {
 		// If we are not on the correct plugin, abort.
 		if( WCA_CF7_EXT_BASE !== $file) {
 			return $links;
 		}
 
-		$review  = '<a href="https://github.com/BicanMarianValeriu/wca-contact-form-7" aria-label="' . esc_attr__( 'Give it a star on GitHub', 'wca-cf7' ) . '" target="_blank">';
+		$review  = '<a href="' . esc_url( sprintf( 'https://github.com/%s', self::REPOSITORY ) ) . '" aria-label="' . esc_attr__( 'Give it a star on GitHub', 'wca-cf7' ) . '" target="_blank">';
 		$review .= esc_html__( 'Star on GitHub', 'wca-cf7' );
 		$review .= '</a>';
 
