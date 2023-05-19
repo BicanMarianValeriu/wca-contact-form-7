@@ -119,13 +119,13 @@ class Frontend {
 
 		wp_enqueue_style(
 			$this->make_handle(),
-			wp_normalize_path( sprintf( '%s/assets/%s/css/%s.css', WCA_CF7_EXT_URL, $path, $name ) ),
+			sprintf( '%s/assets/%s/css/%s.css', untrailingslashit( WCA_CF7_EXT_URL ), $path, $name ),
 			$this->version,
 		);
 
 		wp_enqueue_script(
 			$this->make_handle(),
-			wp_normalize_path( sprintf( '%s/assets/%s/js/%s.js', WCA_CF7_EXT_URL, $path, $name ) ),
+			sprintf( '%s/assets/%s/js/%s.js', untrailingslashit( WCA_CF7_EXT_URL ), $path, $name ),
 			[ 'contact-form-7' ],
 			$this->version,
 			true
