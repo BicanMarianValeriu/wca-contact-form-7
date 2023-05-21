@@ -134,7 +134,7 @@ class Modules implements \ArrayAccess {
      *
      * @return bool
      */
-    public function offsetExists( $key ) {
+    public function offsetExists( $key ): bool {
         return $this->has( $key );
     }
 
@@ -145,30 +145,31 @@ class Modules implements \ArrayAccess {
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet( $key ) {
         return $this->get( $key );
     }
 
     /**
-     * Set a module option.
+     * Set a configuration option.
      *
-     * @param  string  $key
-     * @param  mixed  $value
+     * @param  string   $key
+     * @param  mixed    $value
      *
      * @return void
      */
-    public function offsetSet( $key, $value ) {
+    public function offsetSet( $key, $value ): void {
         $this->set( $key, $value );
     }
 
     /**
-     * Unset a module option.
+     * Unset a configuration option.
      *
-     * @param  string  $key
+     * @param  string   $key
      *
      * @return void
      */
-    public function offsetUnset( $key ) {
+    public function offsetUnset( $key ): void {
         $this->set( $key, null );
     }
 }

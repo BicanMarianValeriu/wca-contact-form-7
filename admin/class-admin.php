@@ -96,7 +96,7 @@ class Admin {
 				</div>',
 				esc_html__( 'Awesome, WCA: Contact Form 7 extension is activated!', 'wca-cf7' ),
 				esc_html__( 'Go to Theme Options in order to setup your preferences.', 'wca-cf7' ),
-				esc_url( admin_url( '/themes.php?page=wecodeart&tab=extensions#wca-cf7' ) ),
+				esc_url( admin_url( '/themes.php?page=wecodeart&tab=plugins#wca-cf7' ) ),
 				esc_html__( 'Awesome, show me the options!', 'wca-cf7' )
 			),
 			[
@@ -291,7 +291,7 @@ class Admin {
 			return $links;
 		}
 
-		$settings  = '<a href="' . esc_url( admin_url( '/themes.php?page=wecodeart&tab=extensions#wca-cf7' ) ) . '" aria-label="' . esc_attr__( 'Navigate to the extension settings.', 'wca-cf7' ) . '">';
+		$settings  = '<a href="' . esc_url( admin_url( '/themes.php?page=wecodeart&tab=plugins#wca-cf7' ) ) . '" aria-label="' . esc_attr__( 'Navigate to the extension settings.', 'wca-cf7' ) . '">';
 		$settings .= esc_html__( 'Settings', 'wca-cf7' );
 		$settings .= '</a>';
 
