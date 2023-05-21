@@ -29,7 +29,7 @@ const {
     }
 } = wp;
 
-addFilter('wecodeart.admin.extensions', 'wecodeart/cf7/admin/panel', optionsPanel);
+addFilter('wecodeart.admin.tabs.plugins', 'wecodeart/cf7/admin/panel', optionsPanel);
 function optionsPanel(panels) {
     return [...panels, {
         name: 'wca-cf7',
