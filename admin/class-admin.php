@@ -31,8 +31,8 @@ class Admin {
 
 	use Asset;
 
-	const NOTICE_ID 	= 'wecodeart/plugin/cf7';
-	const CACHE_ID 		= 'wecodeart/transient/extension/cf7/update';
+	const NOTICE_ID 	= 'wecodeart/plugin/cf7/notice';
+	const UPDATE_ID		= 'wecodeart/plugin/cf7/update';
 	const REPOSITORY 	= 'BicanMarianValeriu/wca-contact-form-7';
 
 	/**
@@ -132,12 +132,7 @@ class Admin {
 		$name = wecodeart_if( 'is_dev_mode' ) ? 'admin' : 'admin.min';
 		$data = [
 			'version' 		=> $this->version,
-			'dependencies'	=> [
-				'wp-i18n',
-				'wp-hooks',
-				'wp-element',
-				'wp-components',
-			],
+			'dependencies'	=> [ 'wecodeart-admin' ],
 		];
 
 		wp_register_script( 
@@ -311,11 +306,11 @@ class Admin {
 	public static function get_github_data() {
 		$api_url	= sprintf( 'https://api.github.com/repos/%s/releases/latest', self::REPOSITORY );
 
-		if ( false === ( $response = get_transient( self::CACHE_ID ) ) ) {
+		if ( false === ( $response = get_transient( self::UPDATE_ID ) ) ) {
 			$request	= new Request( $api_url, [] );
 			$request->send( $request::METHOD_GET );
 			$response = $request->get_response_body( true );
-			set_transient( self::CACHE_ID, $response, 12 * HOUR_IN_SECONDS );
+			set_transient( self::UPDATE_ID, $response, 12 * HOUR_IN_SECONDS );
 		}
 
 		return $response;			

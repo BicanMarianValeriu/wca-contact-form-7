@@ -37,12 +37,8 @@ class Activator {
 		$errors = self::if_compatible();
 
 		if ( count( $errors ) ) {
-			deactivate_plugins( plugin_basename( __FILE__ ) );
+			deactivate_plugins( WCA_EXT_CF7_BASE );
 			wp_die( current( $errors ) );
-		}
-
-		if ( ! function_exists( 'wecodeart_option' ) ) {
-			exit;
 		}
 
 		wecodeart_option( [
