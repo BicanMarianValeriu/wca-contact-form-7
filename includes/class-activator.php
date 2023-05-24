@@ -37,7 +37,7 @@ class Activator {
 		$errors = self::if_compatible();
 
 		if ( count( $errors ) ) {
-			deactivate_plugins( WCA_EXT_CF7_BASE );
+			deactivate_plugins( WCA_CF7_EXT_BASE );
 			wp_die( current( $errors ) );
 		}
 
