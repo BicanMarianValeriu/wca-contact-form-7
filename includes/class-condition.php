@@ -26,19 +26,24 @@ class Condition implements ConditionalInterface {
 
 		$load_scripts = false;
 
-		if( ! is_object( $post ) ) {
-			return $load_scripts;
+		if( is_object( $post ) ) {
+			if( 
+				has_shortcode( $post->post_content, 'contact-form' ) ||
+				has_shortcode( $post->post_content, 'contact-form-7' ) ||
+				has_block( 'contact-form-7/contact-form-selector', $post )
+			) {
+				$load_scripts = true;
+			}
 		}
 
-		if(
-			has_shortcode( $_wp_current_template_content, 'contact-form' ) ||
-			has_shortcode( $_wp_current_template_content, 'contact-form-7' ) ||
-			has_shortcode( $post->post_content, 'contact-form' ) ||
-			has_shortcode( $post->post_content, 'contact-form-7' ) ||
-			has_block( 'contact-form-7/contact-form-selector', $_wp_current_template_content ) ||
-			has_block( 'contact-form-7/contact-form-selector', $post )
-		) {
-			$load_scripts = true;
+		if( is_string( $_wp_current_template_content ) ) {
+			if(
+				has_shortcode( $_wp_current_template_content, 'contact-form' ) ||
+				has_shortcode( $_wp_current_template_content, 'contact-form-7' ) ||
+				has_block( 'contact-form-7/contact-form-selector', $_wp_current_template_content )
+			) {
+				$load_scripts = true;
+			}
 		}
 
 		return $load_scripts;
