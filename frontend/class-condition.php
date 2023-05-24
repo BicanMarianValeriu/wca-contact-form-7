@@ -6,10 +6,10 @@
  * @since      1.0.0
  *
  * @package    WCA\EXT\CF7
- * @subpackage WCA\EXT\CF7\Condition
+ * @subpackage WCA\EXT\CF7\Frontend\Condition
  */
 
-namespace WCA\EXT\CF7;
+namespace WCA\EXT\CF7\Frontend;
 
 use WeCodeArt\Conditional\Interfaces\ConditionalInterface;
 
@@ -24,7 +24,7 @@ class Condition implements ConditionalInterface {
 	public function is_met() {
 		global $post, $_wp_current_template_content;
 
-		$load_scripts = false;
+		$has_form = false;
 
 		if( is_object( $post ) ) {
 			if( 
@@ -32,7 +32,7 @@ class Condition implements ConditionalInterface {
 				has_shortcode( $post->post_content, 'contact-form-7' ) ||
 				has_block( 'contact-form-7/contact-form-selector', $post )
 			) {
-				$load_scripts = true;
+				$has_form = true;
 			}
 		}
 
@@ -42,10 +42,10 @@ class Condition implements ConditionalInterface {
 				has_shortcode( $_wp_current_template_content, 'contact-form-7' ) ||
 				has_block( 'contact-form-7/contact-form-selector', $_wp_current_template_content )
 			) {
-				$load_scripts = true;
+				$has_form = true;
 			}
 		}
 
-		return $load_scripts;
+		return $has_form;
 	}
 }

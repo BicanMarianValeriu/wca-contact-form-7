@@ -16,7 +16,7 @@ namespace WCA\EXT;
 
 use WeCodeArt\Singleton;
 use WeCodeArt\Integration;
-use WeCodeArt\Conditional\Traits\No_Conditionals;
+use WCA\EXT\CF7\Frontend\Condition;
 use function WeCodeArt\Functions\get_prop;
 
 /**
@@ -36,7 +36,6 @@ use function WeCodeArt\Functions\get_prop;
 class CF7 implements Integration {
 
 	use Singleton;
-	use No_Conditionals;
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -74,6 +73,19 @@ class CF7 implements Integration {
 	 * @var      mixed    $config    The config of the plugin.
 	 */
 	protected $config;
+
+	/**
+	 * Get Conditionals
+	 *
+	 * @return void
+	 */
+	public static function get_conditionals() {
+		wecodeart( 'conditionals' )->register( [
+			'cf7_has_form'	=> Condition::class,
+		] );
+
+		return [ 'is_cf7_active' ];
+	}
 
 	/**
 	 * Define the core functionality of the plugin.

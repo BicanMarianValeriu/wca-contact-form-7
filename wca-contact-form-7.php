@@ -70,7 +70,4 @@ register_deactivation_hook( WCA_CF7_EXT, __NAMESPACE__ . '\\deactivate' );
  */
 add_action( 'wecodeart/theme/loaded', function() {
 	wecodeart( 'integrations' )->register( 'plugin/cf7', __NAMESPACE__ );
-	wecodeart( 'conditionals' )->set( [
-		'cf7_has_form'	=> Condition::class,
-	] );
 } );
