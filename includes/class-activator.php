@@ -33,7 +33,7 @@ class Activator {
 	 *
 	 * @since    1.0.0
 	 */
-	public static function activate() {
+	public static function run() {
 		$errors = self::if_compatible();
 
 		if ( count( $errors ) ) {

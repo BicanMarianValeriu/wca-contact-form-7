@@ -48,26 +48,13 @@ new Autoloader( 'WCA\EXT\CF7', __DIR__ . '/frontend' );
 new Autoloader( 'WCA\EXT\CF7', __DIR__ . '/frontend/modules' );
 new Autoloader( 'WCA\EXT\CF7', __DIR__ . '/admin' );
 
-/**
- * The code that runs during plugin activation.
- */
-function activate() {
-	Activator::activate();
-}
-
-/**
- * The code that runs during plugin deactivation.
- */
-function deactivate() {
-	Deactivator::deactivate();
-}
-
-register_activation_hook( WCA_CF7_EXT, __NAMESPACE__ . '\\activate' );
-register_deactivation_hook( WCA_CF7_EXT, __NAMESPACE__ . '\\deactivate' );
+// Activation/Deactivation Hooks
+register_activation_hook( WCA_CF7_EXT, [ Activator::class, 'run' ] );
+register_deactivation_hook( WCA_CF7_EXT, [ Deactivator::class, 'run' ] );
 
 /**
  * Hook the extension after WeCodeArt is Loaded
  */
 add_action( 'wecodeart/theme/loaded', function() {
-	wecodeart( 'integrations' )->register( 'plugin/cf7', __NAMESPACE__ );
+	wecodeart( 'integrations' )->register( 'plugin/contact-form-7', __NAMESPACE__ );
 } );

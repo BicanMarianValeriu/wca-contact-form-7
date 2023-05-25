@@ -24,6 +24,7 @@ use WeCodeArt\Admin\Notifications;
  * @author     Bican Marian Valeriu <marianvaleriubican@gmail.com>
  */
 class Deactivator {
+
 	/**
 	 * Short Description. (use period)
 	 *
@@ -31,7 +32,7 @@ class Deactivator {
 	 *
 	 * @since    1.0.0
 	 */
-	public static function deactivate() {
+	public static function run() {
 		Notifications::get_instance()->remove_notification_by_id( Admin::NOTICE_ID );
 
 		delete_transient( Admin::NOTICE_ID );
