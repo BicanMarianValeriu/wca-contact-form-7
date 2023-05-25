@@ -109,7 +109,9 @@ const {
     Placeholder,
     DropdownMenu,
     ToggleControl,
-    SelectControl,
+    Card,
+    CardHeader,
+    CardBody,
     Dashicon,
     Spinner,
     Tooltip,
@@ -201,7 +203,11 @@ const Options = props => {
       });
     }
   }, [assetsControl]);
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ToggleControl, {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Card, {
+    className: "border shadow-none"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(CardHeader, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h5", {
+    className: "text-uppercase fw-medium m-0"
+  }, __('Optimization', 'wca-cf7'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(CardBody, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ToggleControl, {
     label: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
       style: {
         display: 'flex',
@@ -253,14 +259,18 @@ const Options = props => {
     onChange: value => setFormData({ ...formData,
       clean_assets: value
     })
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ToggleControl, {
+  }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Card, {
+    className: "border border-top-0 shadow-none"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(CardHeader, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h5", {
+    className: "text-uppercase fw-medium m-0"
+  }, __('Functionality', 'wca-cf7'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(CardBody, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ToggleControl, {
     label: __('Remove "autop" filter?', 'wca-cf7'),
     help: getHelpText('P'),
     checked: formData['remove_autop'],
     onChange: value => setFormData({ ...formData,
       remove_autop: value
     })
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("hr", {
+  }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("hr", {
     style: {
       margin: '20px 0'
     }

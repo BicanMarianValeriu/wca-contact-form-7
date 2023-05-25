@@ -17,7 +17,9 @@ const {
         Placeholder,
         DropdownMenu,
         ToggleControl,
-        SelectControl,
+        Card,
+        CardHeader,
+        CardBody,
         Dashicon,
         Spinner,
         Tooltip,
@@ -94,58 +96,72 @@ const Options = (props) => {
 
     return (
         <>
-            <ToggleControl
-                label={<>
-                    <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <span>{__('Remove JS?', 'wca-cf7')}</span>
-                        <DropdownMenu
-                            label={__('More Information', 'wca-cf7')}
-                            icon={<Dashicon icon="info" style={{ color: 'var(--wca--header--color)' }} />}
-                            toggleProps={{
-                                style: {
-                                    height: 'initial',
-                                    minWidth: 'initial',
-                                    padding: 0
-                                }
-                            }}
-                            popoverProps={{
-                                focusOnMount: 'container',
-                                position: 'bottom',
-                                noArrow: false,
-                            }}
-                        >
-                            {() => (
-                            <p style={{ minWidth: 150, margin: 0 }}>
-                                {__('Removing JS will cause the form submission to hard refresh the page!', 'wca-cf7')}
-                            </p>
-                            )}
-                        </DropdownMenu>
-                    </span>
-                </>}
-                help={getHelpText('JS')}
-                checked={formData['remove_js']}
-                onChange={value => setFormData({ ...formData, remove_js: value })}
-            />
-            <ToggleControl
-                label={__('Remove CSS?', 'wca-cf7')}
-                help={getHelpText('CSS')}
-                checked={formData['remove_css']}
-                onChange={value => setFormData({ ...formData, remove_css: value })}
-            />
-            {assetsControl && (
-                <ToggleControl
-                    label={__('Optimize assets loading?', 'wca-cf7')}
-                    help={getHelpText('assets')}
-                    checked={formData['clean_assets']}
-                    onChange={value => setFormData({ ...formData, clean_assets: value })}
-                />
-            )}
-            <ToggleControl
-                label={__('Remove "autop" filter?', 'wca-cf7')}
-                help={getHelpText('P')}
-                checked={formData['remove_autop']}
-                onChange={value => setFormData({ ...formData, remove_autop: value })}
-            />
+            <Card className="border shadow-none">
+                <CardHeader>
+                    <h5 className="text-uppercase fw-medium m-0">{__('Optimization', 'wca-cf7')}</h5>
+                </CardHeader>
+                <CardBody>
+                    <ToggleControl
+                        label={<>
+                            <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                <span>{__('Remove JS?', 'wca-cf7')}</span>
+                                <DropdownMenu
+                                    label={__('More Information', 'wca-cf7')}
+                                    icon={<Dashicon icon="info" style={{ color: 'var(--wca--header--color)' }} />}
+                                    toggleProps={{
+                                        style: {
+                                            height: 'initial',
+                                            minWidth: 'initial',
+                                            padding: 0
+                                        }
+                                    }}
+                                    popoverProps={{
+                                        focusOnMount: 'container',
+                                        position: 'bottom',
+                                        noArrow: false,
+                                    }}
+                                >
+                                    {() => (
+                                        <p style={{ minWidth: 150, margin: 0 }}>
+                                            {__('Removing JS will cause the form submission to hard refresh the page!', 'wca-cf7')}
+                                        </p>
+                                    )}
+                                </DropdownMenu>
+                            </span>
+                        </>}
+                        help={getHelpText('JS')}
+                        checked={formData['remove_js']}
+                        onChange={value => setFormData({ ...formData, remove_js: value })}
+                    />
+                    <ToggleControl
+                        label={__('Remove CSS?', 'wca-cf7')}
+                        help={getHelpText('CSS')}
+                        checked={formData['remove_css']}
+                        onChange={value => setFormData({ ...formData, remove_css: value })}
+                    />
+                    {assetsControl && (
+                        <ToggleControl
+                            label={__('Optimize assets loading?', 'wca-cf7')}
+                            help={getHelpText('assets')}
+                            checked={formData['clean_assets']}
+                            onChange={value => setFormData({ ...formData, clean_assets: value })}
+                        />
+                    )}
+                </CardBody>
+            </Card>
+            <Card className="border border-top-0 shadow-none">
+                <CardHeader>
+                    <h5 className="text-uppercase fw-medium m-0">{__('Functionality', 'wca-cf7')}</h5>
+                </CardHeader>
+                <CardBody>
+                    <ToggleControl
+                        label={__('Remove "autop" filter?', 'wca-cf7')}
+                        help={getHelpText('P')}
+                        checked={formData['remove_autop']}
+                        onChange={value => setFormData({ ...formData, remove_autop: value })}
+                    />
+                </CardBody>
+            </Card>
             <hr style={{ margin: '20px 0' }} />
             <Button
                 className="button"
