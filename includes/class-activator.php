@@ -41,14 +41,16 @@ class Activator {
 			wp_die( current( $errors ) );
 		}
 
-		wecodeart_option( [
-			'contact_form_7' => [
-				'remove_js'		=> false,
-				'remove_css'	=> true,
-				'remove_autop'	=> false,
-				'clean_assets'	=> true,
-			]
-		] );
+		if( ! wecodeart_option( 'contact_form_7' ) ) {
+			wecodeart_option( [
+				'contact_form_7' => [
+					'remove_js'		=> false,
+					'remove_css'	=> true,
+					'remove_autop'	=> false,
+					'clean_assets'	=> true,
+				]
+			] );
+		}
 	}
 
 	/**

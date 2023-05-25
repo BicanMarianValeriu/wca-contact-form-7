@@ -37,9 +37,5 @@ class Deactivator {
 
 		delete_transient( Admin::NOTICE_ID );
 		delete_transient( Admin::UPDATE_ID );
-
-		wecodeart_option( [
-			'contact_form_7' => 'unset'
-		] );
 	}
 }
