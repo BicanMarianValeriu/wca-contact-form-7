@@ -41,12 +41,12 @@ define( 'WCA_CF7_EXT_DIR', 	plugin_dir_path( WCA_CF7_EXT ) );
 define( 'WCA_CF7_EXT_URL', 	plugin_dir_url( WCA_CF7_EXT ) );
 define( 'WCA_CF7_EXT_BASE',	plugin_basename( WCA_CF7_EXT ) );
 
-require_once( __DIR__ . '/includes/class-autoloader.php' );
+require_once( WCA_CF7_EXT_DIR . '/includes/class-autoloader.php' );
 
-new Autoloader( 'WCA\EXT\CF7', __DIR__ . '/includes' );
-new Autoloader( 'WCA\EXT\CF7', __DIR__ . '/frontend' );
-new Autoloader( 'WCA\EXT\CF7', __DIR__ . '/frontend/modules' );
-new Autoloader( 'WCA\EXT\CF7', __DIR__ . '/admin' );
+new Autoloader( 'WCA\EXT\CF7', WCA_CF7_EXT_DIR . '/includes' );
+new Autoloader( 'WCA\EXT\CF7', WCA_CF7_EXT_DIR . '/frontend' );
+new Autoloader( 'WCA\EXT\CF7', WCA_CF7_EXT_DIR . '/frontend/modules' );
+new Autoloader( 'WCA\EXT\CF7', WCA_CF7_EXT_DIR . '/admin' );
 
 // Activation/Deactivation Hooks
 register_activation_hook( WCA_CF7_EXT, [ Activator::class, 'run' ] );
@@ -55,6 +55,4 @@ register_deactivation_hook( WCA_CF7_EXT, [ Deactivator::class, 'run' ] );
 /**
  * Hook the extension after WeCodeArt is Loaded
  */
-add_action( 'wecodeart/theme/loaded', function() {
-	wecodeart( 'integrations' )->register( 'plugin/contact-form-7', __NAMESPACE__ );
-} );
+add_action( 'wecodeart/theme/loaded', fn() => wecodeart( 'integrations' )->register( 'plugin/contact-form-7', __NAMESPACE__ ) );
