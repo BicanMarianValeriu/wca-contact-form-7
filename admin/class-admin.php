@@ -144,6 +144,8 @@ class Admin {
 		);
 
 		wp_enqueue_script( $this->make_handle() );
+
+		wp_set_script_translations( $this->make_handle(), 'wca-cf7', untrailingslashit( WCA_CF7_EXT_DIR ) . '/languages' );
 	}
 
 	/**

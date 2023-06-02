@@ -122,7 +122,7 @@ const Options = (props) => {
                                     }}
                                 >
                                     {() => (
-                                        <p style={{ minWidth: 150, margin: 0 }}>
+                                        <p style={{ minWidth: 250, margin: 0 }}>
                                             {__('Removing JS will cause the form submission to hard refresh the page!', 'wca-cf7')}
                                         </p>
                                     )}
@@ -155,7 +155,33 @@ const Options = (props) => {
                 </CardHeader>
                 <CardBody>
                     <ToggleControl
-                        label={__('Remove "autop" filter?', 'wca-cf7')}
+                        label={<>
+                            <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                <span>{__('Remove "autop" filter?', 'wca-cf7')}</span>
+                                <DropdownMenu
+                                    label={__('More Information', 'wca-cf7')}
+                                    icon={<Dashicon icon="info" style={{ color: 'var(--wca--header--color)' }} />}
+                                    toggleProps={{
+                                        style: {
+                                            height: 'initial',
+                                            minWidth: 'initial',
+                                            padding: 0
+                                        }
+                                    }}
+                                    popoverProps={{
+                                        focusOnMount: 'container',
+                                        position: 'bottom',
+                                        noArrow: false,
+                                    }}
+                                >
+                                    {() => (
+                                        <p style={{ minWidth: 250, margin: 0 }}>
+                                            {__('Removing this filter will alow the use of HTML tags in your forms.', 'wca-cf7')}
+                                        </p>
+                                    )}
+                                </DropdownMenu>
+                            </span>
+                        </>}
                         help={getHelpText('P')}
                         checked={formData['remove_autop']}
                         onChange={value => setFormData({ ...formData, remove_autop: value })}
