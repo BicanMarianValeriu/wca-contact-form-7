@@ -15,7 +15,7 @@
  * Plugin Name:       WCA: Contact Form 7
  * Plugin URI:        https://github.com/BicanMarianValeriu/wca-contact-form-7
  * Description:       WCA Contact Form 7 extension for WeCodeArt Framework theme - assets optimization and automatic forms styling.
- * Version:           1.0.1
+ * Version:           1.0.3
  * Author:            Bican Marian Valeriu
  * Author URI:        https://www.wecodeart.com/about/
  * License:           GPL-2.0+
@@ -41,36 +41,18 @@ define( 'WCA_CF7_EXT_DIR', 	plugin_dir_path( WCA_CF7_EXT ) );
 define( 'WCA_CF7_EXT_URL', 	plugin_dir_url( WCA_CF7_EXT ) );
 define( 'WCA_CF7_EXT_BASE',	plugin_basename( WCA_CF7_EXT ) );
 
-require_once( __DIR__ . '/includes/class-autoloader.php' );
+require_once( WCA_CF7_EXT_DIR . '/includes/class-autoloader.php' );
 
-new Autoloader( 'WCA\EXT\CF7', __DIR__ . '/includes' );
-new Autoloader( 'WCA\EXT\CF7', __DIR__ . '/frontend' );
-new Autoloader( 'WCA\EXT\CF7', __DIR__ . '/frontend/modules' );
-new Autoloader( 'WCA\EXT\CF7', __DIR__ . '/admin' );
+new Autoloader( 'WCA\EXT\CF7', WCA_CF7_EXT_DIR . '/includes' );
+new Autoloader( 'WCA\EXT\CF7', WCA_CF7_EXT_DIR . '/frontend' );
+new Autoloader( 'WCA\EXT\CF7', WCA_CF7_EXT_DIR . '/frontend/modules' );
+new Autoloader( 'WCA\EXT\CF7', WCA_CF7_EXT_DIR . '/admin' );
 
-/**
- * The code that runs during plugin activation.
- */
-function activate() {
-	Activator::activate();
-}
-
-/**
- * The code that runs during plugin deactivation.
- */
-function deactivate() {
-	Deactivator::deactivate();
-}
-
-register_activation_hook( WCA_CF7_EXT, __NAMESPACE__ . '\\activate' );
-register_deactivation_hook( WCA_CF7_EXT, __NAMESPACE__ . '\\deactivate' );
+// Activation/Deactivation Hooks
+register_activation_hook( WCA_CF7_EXT, [ Activator::class, 'run' ] );
+register_deactivation_hook( WCA_CF7_EXT, [ Deactivator::class, 'run' ] );
 
 /**
  * Hook the extension after WeCodeArt is Loaded
  */
-add_action( 'wecodeart/theme/loaded', function() {
-	wecodeart( 'integrations' )->register( 'plugin/cf7', __NAMESPACE__ );
-	wecodeart( 'conditionals' )->set( [
-		'cf7_has_form'	=> Condition::class,
-	] );
-} );
+add_action( 'wecodeart/theme/loaded', fn() => wecodeart( 'integrations' )->register( 'plugin/contact-form-7', __NAMESPACE__ ) );

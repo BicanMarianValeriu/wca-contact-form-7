@@ -37,6 +37,6 @@ class I18N {
 	 * @since    1.0.0
 	 */
 	public function load_plugin_textdomain() {
-		load_plugin_textdomain( 'wca-cf7', false, dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages' );
+		load_plugin_textdomain( 'wca-cf7', false, dirname( WCA_CF7_EXT_BASE ) . '/languages' );
 	}
 }

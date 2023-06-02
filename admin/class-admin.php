@@ -31,8 +31,8 @@ class Admin {
 
 	use Asset;
 
-	const NOTICE_ID 	= 'wecodeart/plugin/cf7';
-	const CACHE_ID 		= 'wecodeart/transient/extension/cf7/update';
+	const NOTICE_ID 	= 'wecodeart/plugin/cf7/notice';
+	const UPDATE_ID		= 'wecodeart/plugin/cf7/update';
 	const REPOSITORY 	= 'BicanMarianValeriu/wca-contact-form-7';
 
 	/**
@@ -96,8 +96,8 @@ class Admin {
 				</div>',
 				esc_html__( 'Awesome, WCA: Contact Form 7 extension is activated!', 'wca-cf7' ),
 				esc_html__( 'Go to Theme Options in order to setup your preferences.', 'wca-cf7' ),
-				esc_url( admin_url( '/themes.php?page=wecodeart&tab=extensions#wca-cf7' ) ),
-				esc_html__( 'Awesome, show me the options!', 'wca-cf7' )
+				esc_url( admin_url( '/themes.php?page=wecodeart&tab=plugins#wca-cf7' ) ),
+				esc_html__( 'Show me the options!', 'wca-cf7' )
 			),
 			[
 				'id'			=> self::NOTICE_ID,
@@ -132,12 +132,7 @@ class Admin {
 		$name = wecodeart_if( 'is_dev_mode' ) ? 'admin' : 'admin.min';
 		$data = [
 			'version' 		=> $this->version,
-			'dependencies'	=> [
-				'wp-i18n',
-				'wp-hooks',
-				'wp-element',
-				'wp-components',
-			],
+			'dependencies'	=> [ 'wecodeart-admin' ],
 		];
 
 		wp_register_script( 
@@ -149,6 +144,8 @@ class Admin {
 		);
 
 		wp_enqueue_script( $this->make_handle() );
+
+		wp_set_script_translations( $this->make_handle(), 'wca-cf7', untrailingslashit( WCA_CF7_EXT_DIR ) . '/languages' );
 	}
 
 	/**
@@ -291,7 +288,7 @@ class Admin {
 			return $links;
 		}
 
-		$settings  = '<a href="' . esc_url( admin_url( '/themes.php?page=wecodeart&tab=extensions#wca-cf7' ) ) . '" aria-label="' . esc_attr__( 'Navigate to the extension settings.', 'wca-cf7' ) . '">';
+		$settings  = '<a href="' . esc_url( admin_url( '/themes.php?page=wecodeart&tab=plugins#wca-cf7' ) ) . '" aria-label="' . esc_attr__( 'Navigate to the extension settings.', 'wca-cf7' ) . '">';
 		$settings .= esc_html__( 'Settings', 'wca-cf7' );
 		$settings .= '</a>';
 
@@ -311,11 +308,11 @@ class Admin {
 	public static function get_github_data() {
 		$api_url	= sprintf( 'https://api.github.com/repos/%s/releases/latest', self::REPOSITORY );
 
-		if ( false === ( $response = get_transient( self::CACHE_ID ) ) ) {
+		if ( false === ( $response = get_transient( self::UPDATE_ID ) ) ) {
 			$request	= new Request( $api_url, [] );
 			$request->send( $request::METHOD_GET );
 			$response = $request->get_response_body( true );
-			set_transient( self::CACHE_ID, $response, 12 * HOUR_IN_SECONDS );
+			set_transient( self::UPDATE_ID, $response, 12 * HOUR_IN_SECONDS );
 		}
 
 		return $response;			

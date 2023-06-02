@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WCA: Contact Form 7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-18 05:16+0000\n"
+"POT-Creation-Date: 2023-05-22 01:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -16,11 +16,7 @@ msgstr ""
 "X-Loco-Version: 2.5.8; wp-5.9\n"
 "X-Domain: wca-cf7"
 
-#: admin/class-admin.php:92
-msgid "Awesome, show me the options!"
-msgstr ""
-
-#: admin/class-admin.php:89
+#: admin/class-admin.php:97
 msgid "Awesome, WCA: Contact Form 7 extension is activated!"
 msgstr ""
 
@@ -28,11 +24,11 @@ msgstr ""
 msgid "Bican Marian Valeriu"
 msgstr ""
 
-#: admin/class-admin.php:257
+#: admin/class-admin.php:273
 msgid "Give it a star on GitHub"
 msgstr ""
 
-#: admin/class-admin.php:90
+#: admin/class-admin.php:98
 msgid "Go to Theme Options in order to setup your preferences."
 msgstr ""
 
@@ -44,23 +40,31 @@ msgstr ""
 msgid "https://www.wecodeart.com/about/"
 msgstr ""
 
-#: admin/class-admin.php:278
+#: admin/class-admin.php:294
 msgid "Navigate to the extension settings."
 msgstr ""
 
-#: admin/class-admin.php:201
+#: admin/class-admin.php:207
 msgid "Plugin reactivated successfully."
 msgstr ""
 
-#: admin/class-admin.php:279
+#: admin/class-admin.php:250
+msgid "release page"
+msgstr ""
+
+#: admin/class-admin.php:295
 msgid "Settings"
 msgstr ""
 
-#: admin/class-admin.php:258
+#: admin/class-admin.php:100
+msgid "Show me the options!"
+msgstr ""
+
+#: admin/class-admin.php:274
 msgid "Star on GitHub"
 msgstr ""
 
-#: admin/class-admin.php:200
+#: admin/class-admin.php:206
 msgid ""
 "The plugin has been updated, but could not be reactivated. Please reactivate "
 "it manually."
@@ -73,6 +77,13 @@ msgstr ""
 #: includes/class-activator.php:70
 msgid ""
 "This extension requires WeCodeArt Framework (or a skin) installed and active."
+msgstr ""
+
+#: admin/class-admin.php:246
+#, php-format
+msgid ""
+"To read the change history for the latest plugin release, please go to the "
+"%s."
 msgstr ""
 
 #. Description of the plugin

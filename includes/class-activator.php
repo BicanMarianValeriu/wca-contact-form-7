@@ -33,26 +33,24 @@ class Activator {
 	 *
 	 * @since    1.0.0
 	 */
-	public static function activate() {
+	public static function run() {
 		$errors = self::if_compatible();
 
 		if ( count( $errors ) ) {
-			deactivate_plugins( plugin_basename( __FILE__ ) );
+			deactivate_plugins( WCA_CF7_EXT_BASE );
 			wp_die( current( $errors ) );
 		}
 
-		if ( ! function_exists( 'wecodeart_option' ) ) {
-			exit;
+		if( ! wecodeart_option( 'contact_form_7' ) ) {
+			wecodeart_option( [
+				'contact_form_7' => [
+					'remove_js'		=> false,
+					'remove_css'	=> true,
+					'remove_autop'	=> false,
+					'clean_assets'	=> true,
+				]
+			] );
 		}
-
-		wecodeart_option( [
-			'contact_form_7' => [
-				'remove_js'		=> false,
-				'remove_css'	=> true,
-				'remove_autop'	=> false,
-				'clean_assets'	=> true,
-			]
-		] );
 	}
 
 	/**
