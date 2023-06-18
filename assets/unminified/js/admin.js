@@ -170,22 +170,22 @@ const Options = props => {
 
     switch (type) {
       case 'assets':
-        status = formData['clean_assets'] ? __('when the content has a form', 'wca-cf7') : __('on every page', 'wca-cf7');
+        status = formData?.clean_assets ? __('when the content has a form', 'wca-cf7') : __('on every page', 'wca-cf7');
         text = sprintf(__('Contact Form 7 assets are loaded %s.', 'wca-cf7'), status);
         break;
 
       case 'JS':
-        status = formData['remove_js'] ? __('removed', 'wca-cf7') : __('loaded', 'wca-cf7');
+        status = formData?.remove_js ? __('removed', 'wca-cf7') : __('loaded', 'wca-cf7');
         text = sprintf(__('Default Contact Form 7 plugin JS will be %s.', 'wca-cf7'), status);
         break;
 
       case 'CSS':
-        status = formData['remove_css'] ? __('removed', 'wca-cf7') : __('loaded', 'wca-cf7');
+        status = formData?.remove_css ? __('removed', 'wca-cf7') : __('loaded', 'wca-cf7');
         text = sprintf(__('Default Contact Form 7 plugin CSS will be %s.', 'wca-cf7'), status);
         break;
 
       case 'P':
-        status = formData['remove_autop'] ? __('does not', 'wca-cf7') : __('does', 'wca-cf7');
+        status = formData?.remove_autop ? __('does not', 'wca-cf7') : __('does', 'wca-cf7');
         text = sprintf(__('Contact Form 7 %s apply the "autop" filter to the form content.', 'wca-cf7'), status);
         break;
 
@@ -241,21 +241,21 @@ const Options = props => {
       }
     }, __('Removing JS will cause the form submission to hard refresh the page!', 'wca-cf7'))))),
     help: getHelpText('JS'),
-    checked: formData['remove_js'],
+    checked: formData?.remove_js,
     onChange: value => setFormData({ ...formData,
       remove_js: value
     })
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ToggleControl, {
     label: __('Remove CSS?', 'wca-cf7'),
     help: getHelpText('CSS'),
-    checked: formData['remove_css'],
+    checked: formData?.remove_css,
     onChange: value => setFormData({ ...formData,
       remove_css: value
     })
   }), assetsControl && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ToggleControl, {
     label: __('Optimize assets loading?', 'wca-cf7'),
     help: getHelpText('assets'),
-    checked: formData['clean_assets'],
+    checked: formData?.clean_assets,
     onChange: value => setFormData({ ...formData,
       clean_assets: value
     })
@@ -297,7 +297,7 @@ const Options = props => {
       }
     }, __('Removing this filter will alow the use of HTML tags in your forms.', 'wca-cf7'))))),
     help: getHelpText('P'),
-    checked: formData['remove_autop'],
+    checked: formData?.remove_autop,
     onChange: value => setFormData({ ...formData,
       remove_autop: value
     })
