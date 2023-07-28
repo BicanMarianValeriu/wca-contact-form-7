@@ -14,7 +14,7 @@ namespace WCA\EXT\CF7\Frontend\Modules;
 use WeCodeArt\Singleton;
 
 /**
- * Select Fields.
+ * File Fields.
  */
 class File extends Module {
 

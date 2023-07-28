@@ -72,15 +72,19 @@ class Frontend {
 	 * Assets
 	 *
 	 * @since 	1.0.0
-	 * @version	1.0.0
+	 * @version	1.0.4
 	 *
 	 * @return 	void
 	 */
 	public function options() {
 		$options = wecodeart_option( 'contact_form_7' );
 		
-		if( get_prop( $options, 'remove_autop' ) ) {
-			add_filter( 'wpcf7_autop_or_not',	'__return_false' );
+		if( get_prop( $options, [ 'remove_autop' ] ) ) {
+			add_filter( 'wpcf7_autop_or_not', '__return_false', 20 );
+		}
+
+		if( get_prop( $options, [ 'feedback' ], '' ) !== '' ) {
+			add_filter( 'wpcf7_form_response_output', '__return_empty_string', 20 );
 		}
 	}
 
@@ -88,7 +92,7 @@ class Frontend {
 	 * Assets
 	 *
 	 * @since 	1.0.0
-	 * @version	1.0.0
+	 * @version	1.0.4
 	 *
 	 * @return 	void
 	 */
@@ -116,20 +120,64 @@ class Frontend {
 		$name = wecodeart_if( 'is_dev_mode' ) ? 'frontend' : 'frontend.min';
 
 		wecodeart( 'styles' )->Utilities->load( [ 'position-relative', 'd-block' ] );
+		
+		$feedback = strtolower( get_prop( $options, [ 'feedback' ], '' ) );
+		if( $feedback !== '' ) {
+			$positions = explode( ' ', get_prop( $options, [ 'feedback_position' ], '' ) );
+			wecodeart( 'styles' )->Utilities->load( [ 'position-fixed', ...$positions, 'p-3', 'me-auto', 'd-flex', 'align-items-center' ] );
+			wecodeart( 'styles' )->Components->load( [ $feedback ] );
+			wp_enqueue_script( 'wecodeart-support-assets-' . $feedback );
+		}
 
-		wp_enqueue_style(
-			$this->make_handle(),
-			sprintf( '%s/assets/%s/css/%s.css', untrailingslashit( WCA_CF7_EXT_URL ), $path, $name ),
-			$this->version,
-		);
+		wecodeart( 'assets' )->add_style( $this->make_handle(), [
+			'inline'	=> 'file:' . sprintf( '%s/assets/%s/css/%s.css', untrailingslashit( WCA_CF7_EXT_DIR ), $path, $name ),
+			'version'	=> $this->version,
+		] );
 
-		wp_enqueue_script(
-			$this->make_handle(),
-			sprintf( '%s/assets/%s/js/%s.js', untrailingslashit( WCA_CF7_EXT_URL ), $path, $name ),
-			[ 'contact-form-7' ],
-			$this->version,
-			true
-		);
+		wecodeart( 'assets' )->add_script( $this->make_handle(), [
+			'path' 		=> sprintf( '%s/assets/%s/js/%s.js', untrailingslashit( WCA_CF7_EXT_URL ), $path, $name ),
+			'deps'		=> [ 'contact-form-7' ],
+			'version'	=> $this->version,
+			'locale'	=> [
+				'feedback'	=> [
+					'type' 		=> $feedback ? ucfirst( $feedback ) : '',
+					'position' 	=> get_prop( $options, [ 'feedback_position' ], '' )
+				],
+				'labels'	=> [
+					'close'		=> __( 'Close form modal', 'wca-cf7' ),
+					'error'		=> __( 'Error', 'wca-cf7' ),
+					'success' 	=> __( 'Success', 'wca-cf7' ),
+				]
+			]
+		] );
+	}
+
+	/**
+	 * Redirection
+	 *
+	 * @since 	1.0.4
+	 * @version	1.0.4
+	 *
+	 * @param	object	$form
+	 *
+	 * @return 	void
+	 */
+	public function mail_sent( $form ) {
+		$has_redirect 	= $form->pref( 'redirect_to' );
+		
+		if( ! $has_redirect ) return;
+
+		add_filter( 'wpcf7_submission_result', static function( $result ) use ( $form, $has_redirect ) {
+			$redirect 	= is_numeric( $has_redirect ) ? get_permalink( $has_redirect ) : $has_redirect;
+
+			return wp_parse_args( [
+				'redirect' => [
+					'url' 	=> esc_url( $redirect ),
+					'delay'	=> (int) $form->pref( 'redirect_delay' ),
+					'blank'	=> (bool) $form->is_true( 'redirect_blank' )
+				],
+			], $result );
+		} );
 	}
 
 	/**

@@ -109,6 +109,7 @@ const {
     Placeholder,
     DropdownMenu,
     ToggleControl,
+    SelectControl,
     Card,
     CardHeader,
     CardBody,
@@ -122,6 +123,43 @@ const {
     useEffect
   }
 } = wp;
+const POSITIONS = {
+  modal: [{
+    label: __('Top', 'wca-cf7'),
+    value: 'top'
+  }, {
+    label: __('Middle', 'wca-cf7'),
+    value: 'centered'
+  }],
+  toast: [{
+    label: __('Top Start', 'wca-cf7'),
+    value: 'top-0 start-0'
+  }, {
+    label: __('Top Center', 'wca-cf7'),
+    value: 'top-0 start-50 translate-middle-x'
+  }, {
+    label: __('Top End', 'wca-cf7'),
+    value: 'top-0 end-0'
+  }, {
+    label: __('Middle Start', 'wca-cf7'),
+    value: 'top-50 start-0 translate-middle-y'
+  }, {
+    label: __('Middle Center', 'wca-cf7'),
+    value: 'top-50 start-50 translate-middle'
+  }, {
+    label: __('Middle End', 'wca-cf7'),
+    value: 'top-50 end-0 translate-middle-y'
+  }, {
+    label: __('Bottom Start', 'wca-cf7'),
+    value: 'bottom-0 start-0'
+  }, {
+    label: __('Bottom Center', 'wca-cf7'),
+    value: 'bottom-0 start-50 translate-middle-x'
+  }, {
+    label: __('Bottom End', 'wca-cf7'),
+    value: 'bottom-0 end-0'
+  }]
+};
 addFilter('wecodeart.admin.tabs.plugins', 'wecodeart/cf7/admin/panel', optionsPanel);
 
 function optionsPanel(panels) {
@@ -189,13 +227,17 @@ const Options = props => {
         text = sprintf(__('Contact Form 7 %s apply the "autop" filter to the form content.', 'wca-cf7'), status);
         break;
 
+      case 'feedback':
+        text = __('Select submission feedback type.', 'wca-cf7');
+        break;
+
       default:
     }
 
     return text;
   };
 
-  const assetsControl = !(formData['remove_js'] && formData['remove_css']);
+  const assetsControl = !(formData?.remove_js && formData.remove_css);
   useEffect(() => {
     if (!assetsControl) {
       setFormData({ ...formData,
@@ -203,8 +245,15 @@ const Options = props => {
       });
     }
   }, [assetsControl]);
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Card, {
-    className: "border shadow-none"
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "grid",
+    style: {
+      '--wca--columns': 2
+    }
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "g-col-2 g-col-lg-1"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Card, {
+    className: "border shadow-none h-100"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(CardHeader, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h5", {
     className: "text-uppercase fw-medium m-0"
   }, __('Optimization', 'wca-cf7'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(CardBody, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ToggleControl, {
@@ -242,25 +291,28 @@ const Options = props => {
     }, __('Removing JS will cause the form submission to hard refresh the page!', 'wca-cf7'))))),
     help: getHelpText('JS'),
     checked: formData?.remove_js,
-    onChange: value => setFormData({ ...formData,
-      remove_js: value
+    onChange: remove_js => setFormData({ ...formData,
+      remove_js,
+      feedback: ''
     })
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ToggleControl, {
     label: __('Remove CSS?', 'wca-cf7'),
     help: getHelpText('CSS'),
     checked: formData?.remove_css,
-    onChange: value => setFormData({ ...formData,
-      remove_css: value
+    onChange: remove_css => setFormData({ ...formData,
+      remove_css
     })
   }), assetsControl && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ToggleControl, {
     label: __('Optimize assets loading?', 'wca-cf7'),
     help: getHelpText('assets'),
     checked: formData?.clean_assets,
-    onChange: value => setFormData({ ...formData,
-      clean_assets: value
+    onChange: clean_assets => setFormData({ ...formData,
+      clean_assets
     })
-  }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Card, {
-    className: "border border-top-0 shadow-none"
+  })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "g-col-2 g-col-lg-1"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Card, {
+    className: "border shadow-none h-100"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(CardHeader, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h5", {
     className: "text-uppercase fw-medium m-0"
   }, __('Functionality', 'wca-cf7'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(CardBody, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ToggleControl, {
@@ -298,10 +350,35 @@ const Options = props => {
     }, __('Removing this filter will alow the use of HTML tags in your forms.', 'wca-cf7'))))),
     help: getHelpText('P'),
     checked: formData?.remove_autop,
-    onChange: value => setFormData({ ...formData,
-      remove_autop: value
+    onChange: remove_autop => setFormData({ ...formData,
+      remove_autop
     })
-  }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("hr", {
+  }), !formData?.remove_js && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(SelectControl, {
+    label: __('Feedback type', 'wca-cf7'),
+    value: formData?.feedback,
+    options: [{
+      label: __('Default', 'wca-cf7'),
+      value: ''
+    }, {
+      label: __('Modal', 'wca-cf7'),
+      value: 'modal'
+    }, {
+      label: __('Toast', 'wca-cf7'),
+      value: 'toast'
+    }],
+    onChange: feedback => setFormData({ ...formData,
+      feedback,
+      feedback_position: ''
+    }),
+    help: getHelpText('feedback')
+  }), formData?.feedback !== '' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(SelectControl, {
+    label: __('Feedback position', 'wca-cf7'),
+    value: formData?.feedback_position,
+    options: POSITIONS[formData?.feedback],
+    onChange: feedback_position => setFormData({ ...formData,
+      feedback_position
+    })
+  })))))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("hr", {
     style: {
       margin: '20px 0'
     }

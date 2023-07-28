@@ -34,10 +34,12 @@ class Modules implements \ArrayAccess {
 		$this->register( 'basic',       Modules\Basic::class    );
 		$this->register( 'textarea',	Modules\TextArea::class	);
 		$this->register( 'checkbox',	Modules\Checkbox::class	);
+		$this->register( 'password',	Modules\Password::class	);
 		$this->register( 'select',		Modules\Select::class	);
 		$this->register( 'number',		Modules\Number::class	);
 		$this->register( 'file',		Modules\File::class		);
 		$this->register( 'date',       	Modules\Date::class		);
+		$this->register( 'color',       Modules\Color::class    );
 		$this->register( 'quiz',       	Modules\Quiz::class		);
 		$this->register( 'submit',		Modules\Submit::class	);
 		$this->register( 'acceptance',	Modules\Acceptance::class );

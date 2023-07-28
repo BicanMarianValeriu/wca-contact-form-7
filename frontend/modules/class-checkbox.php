@@ -58,7 +58,7 @@ class Checkbox extends Module {
         $multiple       = false;
     
         if ( 'checkbox' == $tag->basetype ) {
-            $multiple   = $exclusive;
+            $multiple   = ! $exclusive;
         } else { // radio
             $exclusive  = false;
         }

@@ -36,7 +36,7 @@ class Submit extends Module {
 	 * @return  string Rendered field output.
 	 */
 	public function get_html( $tag ) {
-		$class = wpcf7_form_controls_class( $tag->type, 'wp-block-button__link wp-element-button has-spinner' );
+		$class = wpcf7_form_controls_class( $tag->type, 'wp-block-button__link wp-element-button' );
         $class = array_filter( explode( ' ', $tag->get_class_option( $class ) ) );
 
         if( ! count( array_filter( $class, function( $i ) {
@@ -63,7 +63,7 @@ class Submit extends Module {
                 'class' => self::get_wrap_class( $tag, 'wp-block-button' )
             ]
         ] ], 'wecodeart_input', [ 'button', [
-            'label' => $value,
+            'label' => sprintf( '<span>%s</span><span class="has-spinner"></span>', $value ),
             'attrs' => $attrs
         ] ], false );
 
