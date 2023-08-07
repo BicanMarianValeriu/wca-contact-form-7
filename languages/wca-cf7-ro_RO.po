@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WCA: Contact Form 7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-02 23:19+0000\n"
-"PO-Revision-Date: 2023-05-22 01:53+0000\n"
+"PO-Revision-Date: 2023-07-11 21:11+0000\n"
 "Last-Translator: \n"
 "Language-Team: Română\n"
 "Language: ro_RO\n"
@@ -24,7 +24,15 @@ msgstr "Minunat, WCA: Extensia Formular de contact 7 este activată!"
 msgid "Bican Marian Valeriu"
 msgstr "Bican Marian Valeriu"
 
-#: admin/class-admin.php:273
+#: frontend/class-frontend.php:147
+msgid "Close form modal"
+msgstr "Inchide fereastra modală a formularului"
+
+#: frontend/class-frontend.php:148
+msgid "Error"
+msgstr "Eroare"
+
+#: admin/class-admin.php:270
 msgid "Give it a star on GitHub"
 msgstr "Dați-i o stea pe GitHub"
 
@@ -41,19 +49,19 @@ msgstr "https://github.com/BicanMarianValeriu/wca-contact-form-7"
 msgid "https://www.wecodeart.com/about/"
 msgstr "https://www.wecodeart.com/about/"
 
-#: admin/class-admin.php:294
+#: admin/class-admin.php:291
 msgid "Navigate to the extension settings."
 msgstr "Navigați la setările extensiei."
 
-#: admin/class-admin.php:207
+#: admin/class-admin.php:204
 msgid "Plugin reactivated successfully."
 msgstr "Pluginul a fost reactivat cu succes."
 
-#: admin/class-admin.php:250
+#: admin/class-admin.php:247
 msgid "release page"
 msgstr "pagina de lansare"
 
-#: admin/class-admin.php:295
+#: admin/class-admin.php:292
 msgid "Settings"
 msgstr "Setări"
 
@@ -61,11 +69,15 @@ msgstr "Setări"
 msgid "Show me the options!"
 msgstr "Arată-mi opțiunile!"
 
-#: admin/class-admin.php:274
+#: admin/class-admin.php:271
 msgid "Star on GitHub"
 msgstr "Dăi stea pe GitHub"
 
-#: admin/class-admin.php:206
+#: frontend/class-frontend.php:149
+msgid "Success"
+msgstr "Success"
+
+#: admin/class-admin.php:203
 msgid ""
 "The plugin has been updated, but could not be reactivated. Please reactivate "
 "it manually."
@@ -73,18 +85,18 @@ msgstr ""
 "Pluginul a fost actualizat, dar nu a putut fi reactivat. Vă rugăm să-l "
 "reactivați manual."
 
-#: includes/class-activator.php:71
+#: includes/class-activator.php:70
 msgid "This extension requires Contact Form 7 plugin installed and active."
 msgstr "Această extensie necesită pluginul Contact Form 7 instalat și activ."
 
-#: includes/class-activator.php:70
+#: includes/class-activator.php:69
 msgid ""
 "This extension requires WeCodeArt Framework (or a skin) installed and active."
 msgstr ""
 "Această extensie necesită tema WeCodeArt Framework (sau un skin) instalat și "
 "activ."
 
-#: admin/class-admin.php:246
+#: admin/class-admin.php:243
 #, php-format
 msgid ""
 "To read the change history for the latest plugin release, please go to the "

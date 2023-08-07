@@ -48,6 +48,7 @@ class Activator {
 					'remove_css'	=> true,
 					'remove_autop'	=> false,
 					'clean_assets'	=> true,
+					'feedback'		=> '',
 				]
 			] );
 		}

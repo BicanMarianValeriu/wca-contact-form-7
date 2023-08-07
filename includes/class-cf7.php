@@ -205,10 +205,11 @@ class CF7 implements Integration {
 		$frontend = new CF7\Frontend( $this->get_plugin_name(), $this->get_version(), $this->get_config() );
 
 		// Load Hooks
-		$this->loader->add_action( 'init',							$frontend, 'options', 		20	);
-		$this->loader->add_action( 'wp_enqueue_scripts',			$frontend, 'assets', 		20 	);
-		$this->loader->add_filter( 'body_class', 					$frontend, 'body_class', 	20 );
-		$this->loader->add_filter( 'wpcf7_form_class_attr', 	 	$frontend, 'form_class', 	10, 1 );
+		$this->loader->add_action( 'init',					$frontend, 'options' 	);
+		$this->loader->add_action( 'wp_enqueue_scripts',	$frontend, 'assets' 	);
+		$this->loader->add_filter( 'body_class',			$frontend, 'body_class' );
+		$this->loader->add_filter( 'wpcf7_form_class_attr',	$frontend, 'form_class' );
+		$this->loader->add_action( 'wpcf7_mail_sent', 		$frontend, 'mail_sent' 	);
 	}
 
 	/**
