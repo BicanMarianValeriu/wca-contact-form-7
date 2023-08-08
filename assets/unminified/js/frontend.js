@@ -192,6 +192,8 @@ const TEMPLATES = {
             feedbackHTML.addEventListener(`hidden.bs.${plugin}`, () => element.remove());
             feedbackJS.show();
           });
+          el.addEventListener('wpcf7mailsent', () => el.classList.remove('was-validated'));
+          el.addEventListener('wpcf7mailfailed', () => el.classList.remove('was-validated'));
         });
       }
     }
