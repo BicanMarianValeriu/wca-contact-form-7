@@ -39,8 +39,6 @@ export default (function (wecodeart) {
 				const forms = document.querySelectorAll('.wpcf7-form');
 
 				[...forms].map(el => {
-					el.addEventListener('change', () => el.classList.add('was-validated'));
-
 					el.addEventListener('wpcf7submit', ({ detail: { apiResponse: {
 						status,
 						message,

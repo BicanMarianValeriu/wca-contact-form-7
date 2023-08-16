@@ -125,7 +125,6 @@ const TEMPLATES = {
         } = wcaExtCf7Frontend || {};
         const forms = document.querySelectorAll('.wpcf7-form');
         [...forms].map(el => {
-          el.addEventListener('change', () => el.classList.add('was-validated'));
           el.addEventListener('wpcf7submit', _ref => {
             let {
               detail: {
