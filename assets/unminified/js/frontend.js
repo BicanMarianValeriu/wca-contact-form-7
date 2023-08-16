@@ -125,7 +125,6 @@ const TEMPLATES = {
         } = wcaExtCf7Frontend || {};
         const forms = document.querySelectorAll('.wpcf7-form');
         [...forms].map(el => {
-          el.addEventListener('change', () => el.classList.add('was-validated'));
           el.addEventListener('wpcf7submit', _ref => {
             let {
               detail: {
@@ -192,6 +191,8 @@ const TEMPLATES = {
             feedbackHTML.addEventListener(`hidden.bs.${plugin}`, () => element.remove());
             feedbackJS.show();
           });
+          el.addEventListener('wpcf7mailsent', () => el.classList.remove('was-validated'));
+          el.addEventListener('wpcf7mailfailed', () => el.classList.remove('was-validated'));
         });
       }
     }
