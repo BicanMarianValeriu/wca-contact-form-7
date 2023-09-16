@@ -92,29 +92,15 @@ class Frontend {
 	 * Assets
 	 *
 	 * @since 	1.0.0
-	 * @version	1.0.4
+	 * @version	1.0.7
 	 *
 	 * @return 	void
 	 */
 	public function assets() {
-		$options = wecodeart_option( 'contact_form_7' );
-
-		// If no form and control assets dont bother loading CF7 assets.
-		if( ! wecodeart_if( 'cf7_has_form' ) && get_prop( $options, 'clean_assets' ) ) {
-			wp_deregister_style( 'contact-form-7' );
-			wp_deregister_script( 'contact-form-7' );
-		}
-
-		if( get_prop( $options, 'remove_css' ) ) {
-			wp_deregister_style( 'contact-form-7' );
-		}
-
-		if( get_prop( $options, 'remove_js' ) ) {
-			wp_deregister_script( 'contact-form-7' );
-		}
-
 		// If no form don't bother loading our plugin assets.
 		if( ! wecodeart_if( 'cf7_has_form' ) ) return;
+		
+		$options = wecodeart_option( 'contact_form_7' );
 		
 		$path = wecodeart_if( 'is_dev_mode' ) ? 'unminified' : 'minified';
 		$name = wecodeart_if( 'is_dev_mode' ) ? 'frontend' : 'frontend.min';
@@ -150,6 +136,36 @@ class Frontend {
 				]
 			]
 		] );
+	}
+
+	/**
+	 * Assets Cleanup
+	 *
+	 * @since 	1.0.7
+	 * @version	1.0.7
+	 *
+	 * @return 	void
+	 */
+	public function cleanup() {
+		$options = wecodeart_option( 'contact_form_7' );
+
+		// If no form and control assets dont bother loading CF7 assets.
+		if( ! wecodeart_if( 'cf7_has_form' ) && get_prop( $options, 'clean_assets' ) ) {
+			// Plugin cleanup
+			wp_deregister_style( 'contact-form-7' );
+			wp_deregister_script( 'contact-form-7' );
+			// Recaptcha cleanup
+			wp_deregister_script( 'google-recaptcha' );
+			wp_deregister_script( 'wpcf7-recaptcha' );
+		}
+
+		if( get_prop( $options, 'remove_css' ) ) {
+			wp_deregister_style( 'contact-form-7' );
+		}
+
+		if( get_prop( $options, 'remove_js' ) ) {
+			wp_deregister_script( 'contact-form-7' );
+		}
 	}
 
 	/**
